@@ -1,4 +1,4 @@
-package com.example.old_front;
+package todolist.old_front;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
