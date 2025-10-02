@@ -9,9 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import todolist.dto.board.BoardListDto;
 import todolist.dto.board.reply.ReplyDto;
 import todolist.service.board.ReplyService;
 
@@ -33,7 +30,8 @@ public class ReplyServiceImpl implements ReplyService{
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(replyDto, null)
                 .retrieve()
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .block();
         return res;
     }
 
@@ -46,7 +44,8 @@ public class ReplyServiceImpl implements ReplyService{
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(replyDto, null)
                 .retrieve()
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .block();
         return res;
     }
 

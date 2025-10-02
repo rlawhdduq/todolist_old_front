@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import todolist.dto.board.reply.ReplyDto;
 import todolist.dto.board.todolist.TodolistDto;
 import todolist.service.board.TodoService;
 
@@ -31,7 +30,8 @@ public class TodoServiceImpl implements TodoService{
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(todolistDto, null)
                 .retrieve()
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .block();
         return res;
     }
 
@@ -44,7 +44,8 @@ public class TodoServiceImpl implements TodoService{
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(todolistDto, null)
                 .retrieve()
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .block();
         return res;
     }
 
@@ -92,7 +93,7 @@ public class TodoServiceImpl implements TodoService{
                                                 )
                                             .retrieve()
                                             .bodyToMono(new ParameterizedTypeReference<List<TodolistDto>>() {})
-                                            .block();;
+                                            .block();
         return todolist;
     }
 }
