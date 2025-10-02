@@ -55,33 +55,37 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public void delete(Long boardId, Long userId)
+    public String delete(Long boardId, Long userId)
     {
-        String callRes = webClient.delete()
-                                .uri(
-                                    uriBuilder -> uriBuilder.path(gatewayUrl+"/api/v1/board")
-                                                            .queryParam("boardId", boardId)
-                                                            .queryParam("userId", userId)
-                                                            .build()
-                                    )
-                                .retrieve()
-                                .bodyToMono(String.class)
-                                .block();
+        String res = "삭제되었습니다.";
+        webClient.delete()
+                .uri(
+                    uriBuilder -> uriBuilder.path(gatewayUrl+"/api/v1/board")
+                                            .queryParam("boardId", boardId)
+                                            .queryParam("userId", userId)
+                                            .build()
+                    )
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        return res;
     }
 
     @Override
-    public void detailDelete(List<Long> boardIds, Long userId)
+    public String detailDelete(List<Long> boardIds, Long userId)
     {
-        String callRes = webClient.delete()
-                                .uri(
-                                    uriBuilder -> uriBuilder.path(gatewayUrl+"/api/v1/board")
-                                                            .queryParam("boardIds", boardIds)
-                                                            .queryParam("userId", userId)
-                                                            .build()
-                                    )
-                                .retrieve()
-                                .bodyToMono(String.class)
-                                .block();
+        String res = "삭제되었습니다.";
+        webClient.delete()
+                .uri(
+                    uriBuilder -> uriBuilder.path(gatewayUrl+"/api/v1/board")
+                                            .queryParam("boardIds", boardIds)
+                                            .queryParam("userId", userId)
+                                            .build()
+                    )
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        return res;
     }
 
     @Override

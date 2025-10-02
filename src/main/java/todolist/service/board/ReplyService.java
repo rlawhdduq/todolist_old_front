@@ -1,5 +1,17 @@
 package todolist.service.board;
 
-public interface ReplyService {
+import java.util.List;
 
+import todolist.dto.board.reply.ReplyDto;
+
+public interface ReplyService {
+    
+    String insert(ReplyDto replyDto);
+    String update(ReplyDto replyDto);
+    String delete(Long boardId, Long replyId);
+    String detailDelete(Long replyId);
+    List<ReplyDto> getReply(Long boardId);
+    String deleteFromBoard(Long boardId);
+    String detailDeleteFromBoard(List<Long> boardIds);
+    
 }
