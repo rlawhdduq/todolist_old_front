@@ -1,5 +1,6 @@
 package todolist.old_front.service.user.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class UserServiceImpl implements UserService{
 
     @Value("${gateway.url}")
     private String gatewayUrl;
-
+    @Autowired
     private WebClient webClient;
 
     @Override
