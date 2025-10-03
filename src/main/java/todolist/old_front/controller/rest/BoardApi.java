@@ -3,7 +3,6 @@ package todolist.old_front.controller.rest;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,12 +37,12 @@ public class BoardApi {
     }
     
     @RequestMapping(path="/board", method=RequestMethod.POST)
-    public void insertBoard(@RequestBody BoardDto boardDto) {
+    public void insertBoard(BoardDto boardDto) {
         boardService.insert(boardDto);
         return;
     }
     @RequestMapping(path="/board", method=RequestMethod.PUT)
-    public void updateBoard(@RequestBody BoardDto boardDto)
+    public void updateBoard(BoardDto boardDto)
     {
         boardService.update(boardDto);
         return;

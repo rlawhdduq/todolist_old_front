@@ -5,14 +5,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import todolist.old_front.dto.follow.FollowDto;
 import todolist.old_front.service.follow.impl.FollowServiceImpl;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -30,14 +28,14 @@ public class FollowApi {
     }
     
     @RequestMapping(method=RequestMethod.POST)
-    public String insertFollow(@RequestBody FollowDto followDto)
+    public String insertFollow(FollowDto followDto)
     {
         String res = followService.insert(followDto);
         return res;
     }
 
     @RequestMapping(method=RequestMethod.DELETE)
-    public String deleteFollow(@RequestBody FollowDto followDto)
+    public String deleteFollow(FollowDto followDto)
     {
         String res = followService.delete(followDto);
         return res;

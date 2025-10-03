@@ -6,7 +6,6 @@ import todolist.old_front.dto.auth.AuthInfoDto;
 import todolist.old_front.service.auth.impl.AuthServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,7 +18,7 @@ public class AuthApi {
     private AuthServiceImpl authService;
 
     @RequestMapping(method=RequestMethod.POST)
-    public String getToken(@RequestBody AuthInfoDto authInfoDto)
+    public String getToken(AuthInfoDto authInfoDto)
     {
         String token = authService.getToken(authInfoDto);
         return token;

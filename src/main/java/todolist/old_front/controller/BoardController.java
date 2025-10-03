@@ -17,7 +17,6 @@ import todolist.old_front.service.board.impl.ReplyServiceImpl;
 import todolist.old_front.service.board.impl.TodoServiceImpl;
 
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -33,7 +32,7 @@ public class BoardController {
 
     // 게시판
     @RequestMapping(method=RequestMethod.GET)
-    public String getBoardList(@RequestParam GetBoardDto getBoardDto)
+    public String getBoardList(GetBoardDto getBoardDto)
     {
        List<BoardListDto> boardList = boardService.getBoard(getBoardDto);
        return "board/board";

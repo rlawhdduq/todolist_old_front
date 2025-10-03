@@ -2,13 +2,9 @@ package todolist.old_front.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import todolist.old_front.dto.user.AuthUserDto;
-import todolist.old_front.dto.user.LoginUserDto;
 import todolist.old_front.service.user.impl.UserServiceImpl;
 
 @Controller
