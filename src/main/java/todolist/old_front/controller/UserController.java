@@ -24,7 +24,7 @@ public class UserController {
         return "user/login";
     }
 
-    @RequestMapping(path="/login", method=RequestMethod.GET)
+    @RequestMapping(path="/join", method=RequestMethod.GET)
     public String joinPage()
     {
         return "user/join";
