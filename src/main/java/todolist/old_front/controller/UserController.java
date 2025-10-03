@@ -18,18 +18,22 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @RequestMapping(path="/{userId}", method=RequestMethod.GET)
-    public AuthUserDto getUser(@PathVariable Long userId)
+    @RequestMapping(path="/login", method=RequestMethod.GET)
+    public String loginPage()
     {
-        AuthUserDto authUserDto = userService.getUser(userId);
-        return authUserDto;
+        return "user/login";
     }
 
-    @RequestMapping(path="/login", method=RequestMethod.POST)
-    public AuthUserDto loginUser(@RequestBody LoginUserDto loginUserDto)
+    @RequestMapping(path="/login", method=RequestMethod.GET)
+    public String joinPage()
     {
-        AuthUserDto authUserDto = userService.loginUser(loginUserDto);
-        return authUserDto;
+        return "user/join";
+    }
+
+    @RequestMapping(path="/info", method=RequestMethod.GET)
+    public String infoPage()
+    {
+        return "user/info";
     }
 
 }

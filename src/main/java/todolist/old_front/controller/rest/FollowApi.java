@@ -1,11 +1,19 @@
 package todolist.old_front.controller.rest;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import todolist.old_front.dto.follow.FollowDto;
 import todolist.old_front.service.follow.impl.FollowServiceImpl;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/v1/follow")
@@ -14,17 +22,25 @@ public class FollowApi {
     @Autowired
     private FollowServiceImpl followService;
 
-    @RequestMapping()
-    public String insertFollow(FollowDto followDto)
+    @RequestMapping(path="/{userId}", method=RequestMethod.GET)
+    public Map<String, List<Long>> requestMethodName(@PathVariable Long userId)
     {
-        
-        return "";
+        Map<String, List<Long>> res = followService.getFollowing(userId);
+        return res;
+    }
+    
+    @RequestMapping(method=RequestMethod.POST)
+    public String insertFollow(@RequestBody FollowDto followDto)
+    {
+        String res = followService.insert(followDto);
+        return res;
     }
 
-    @RequestMapping()
-    public String deleteFollow(FollowDto followDto)
+    @RequestMapping(method=RequestMethod.DELETE)
+    public String deleteFollow(@RequestBody FollowDto followDto)
     {
-        return "";
+        String res = followService.delete(followDto);
+        return res;
     }
 
 }

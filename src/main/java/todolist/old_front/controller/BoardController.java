@@ -33,15 +33,15 @@ public class BoardController {
 
     // 게시판
     @RequestMapping(method=RequestMethod.GET)
-    public List<BoardListDto> getBoardList(@RequestParam GetBoardDto getBoardDto)
+    public String getBoardList(@RequestParam GetBoardDto getBoardDto)
     {
        List<BoardListDto> boardList = boardService.getBoard(getBoardDto);
-       return boardList;
+       return "board/board";
     }
     
     // 게시글
     @RequestMapping(path="/{boardId}", method=RequestMethod.GET)
-    public BoardDetailDto getBoardDetail(@PathVariable Long boardId)
+    public String getBoardDetail(@PathVariable Long boardId)
     {
         BoardDetailDto detailBoard = boardService.getDetailBoard(boardId);
         List<ReplyDto> replyList = replyService.getReply(boardId);
@@ -50,7 +50,7 @@ public class BoardController {
         detailBoard.setReply(replyList);
         detailBoard.setTodolist(todolist);
 
-        return detailBoard;
+        return "board/boardDetail";
     }
     
     // Reply
