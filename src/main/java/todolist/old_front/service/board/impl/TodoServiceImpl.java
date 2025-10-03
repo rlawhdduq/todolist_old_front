@@ -2,7 +2,6 @@ package todolist.old_front.service.board.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -15,11 +14,10 @@ import todolist.old_front.service.board.TodoService;
 @Service
 public class TodoServiceImpl implements TodoService{
 
-    @Autowired
-    private WebClient webClient;
-    
     @Value("${gateway.url}")
     private String gatewayUrl;
+
+    private WebClient webClient;
 
     @Override
     public String insert(TodolistDto todolistDto)

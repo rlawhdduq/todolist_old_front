@@ -3,7 +3,6 @@ package todolist.old_front.service.follow.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -16,11 +15,10 @@ import todolist.old_front.service.follow.FollowService;
 @Service
 public class FollowServiceImpl implements FollowService{
 
-    @Autowired
-    private WebClient webClient;
-    
     @Value("${gateway.url}")
     private String gatewayUrl;
+
+    private WebClient webClient;
 
     @Override
     public String insert(FollowDto followDto)
