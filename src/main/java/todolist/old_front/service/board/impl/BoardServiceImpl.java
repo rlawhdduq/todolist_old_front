@@ -22,11 +22,10 @@ import todolist.old_front.service.board.BoardService;
 @Service
 public class BoardServiceImpl implements BoardService{
 
-    @Autowired
-    private WebClient webClient;
-    
     @Value("${gateway.url}")
     private String gatewayUrl;
+
+    private WebClient webClient;
     
     @Override
     public Long insert(BoardDto boardDto)
