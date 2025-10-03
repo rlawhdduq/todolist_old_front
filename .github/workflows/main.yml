@@ -44,7 +44,7 @@ jobs:
                   echo "CD start"
                   cd /spring/docker/compose
                   docker-compose -f docker-compose-oldfront.yaml down -v
-                  docker-compose -f docker-compose-front.yaml up -d --build
+                  docker-compose -f docker-compose-oldfront.yaml up -d --build
                   echo "CD end"
       
       
