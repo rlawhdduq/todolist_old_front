@@ -25,6 +25,7 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // 타임리프 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-webflux' // WebClient
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	

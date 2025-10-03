@@ -37,24 +37,24 @@ public class BoardApi {
         return detailBoard;
     }
     
-    @RequestMapping(method=RequestMethod.POST)
+    @RequestMapping(path="/board", method=RequestMethod.POST)
     public void insertBoard(@RequestBody BoardDto boardDto) {
         boardService.insert(boardDto);
         return;
     }
-    @RequestMapping(method=RequestMethod.PUT)
+    @RequestMapping(path="/board", method=RequestMethod.PUT)
     public void updateBoard(@RequestBody BoardDto boardDto)
     {
         boardService.update(boardDto);
         return;
     }
-    @RequestMapping(method=RequestMethod.DELETE)
+    @RequestMapping(path="/board", method=RequestMethod.DELETE)
     public void deleteBoard(@RequestParam Long boardId, Long userId)
     {
         boardService.delete(boardId, userId);
         return;
     }
-    @RequestMapping(path="/detail", method=RequestMethod.DELETE)
+    @RequestMapping(path="/board/detail", method=RequestMethod.DELETE)
     public void detailDeleteBoard(@RequestParam List<Long> boardIds, Long userId)
     {
         boardService.detailDelete(boardIds, userId);
