@@ -1,4 +1,4 @@
-package todolist.controller.auth;
+package todolist.controller.rest;
 
 import org.springframework.web.bind.annotation.RestController;
 

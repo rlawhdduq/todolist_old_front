@@ -4,30 +4,38 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import todolist.dto.board.todolist.TodolistDto;
 import todolist.dto.board.reply.ReplyDto;
 
+    
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BoardDetailDto {
-    private Long board_id;
-    private Long user_id;
-    private String scope_of_disclosure;
-    private Character fulfillment_or_not;
-    private LocalDateTime create_time;
-    private LocalDateTime fulfillment_time;
+
+    private Long boardId;
+    private Long userId;
+    private String scopeOfDisclosure;
+    private Character fulfillmentOrNot;
+    private LocalDateTime createTime;
+    private LocalDateTime fulfillmentTime;
     private String content;
-    private LocalDateTime update_time;
+    private LocalDateTime updateTime;
     private List<TodolistDto> todolist;
     private List<ReplyDto> reply;
 
-    public BoardDetailDto(Long board_id, Long user_id, String scope_of_disclosure, 
-    Character fulfillment_or_not, LocalDateTime create_time, LocalDateTime fulfillment_time, String content)
+    public BoardDetailDto(Long boardId, Long userId, String scopeOfDisclosure, 
+    Character fulfillmentOrNot, LocalDateTime createTime, LocalDateTime fulfillmentTime, String content)
     {
-        this.board_id = board_id;
-        this.user_id = user_id;
-        this.scope_of_disclosure = scope_of_disclosure;
-        this.fulfillment_or_not = fulfillment_or_not;
-        this.create_time = create_time;
-        this.fulfillment_time = fulfillment_time;
+        this.boardId = boardId;
+        this.userId = userId;
+        this.scopeOfDisclosure = scopeOfDisclosure;
+        this.fulfillmentOrNot = fulfillmentOrNot;
+        this.createTime = createTime;
+        this.fulfillmentTime = fulfillmentTime;
         this.content = content;
     }
 
@@ -53,4 +61,5 @@ public class BoardDetailDto {
             this.reply = reply;
         }
     }
+
 }

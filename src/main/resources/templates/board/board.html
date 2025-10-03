@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyDays</title>
+    <style>
+        body, h1, p, ul { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.6; }
+        header { background-color: #333; color: #fff; padding: 1rem; text-align: center; }
+        nav ul { list-style: none; background-color: #444; text-align: center; padding: 0.5rem 0; }
+        nav ul li { display: inline; margin-right: 20px; }
+        nav ul li a { text-decoration: none; color: white; font-weight: bold; }
+        nav ul li a:hover { color: #f4c542; }
+        main { padding: 2rem; min-height: 70vh; }
+        .hero { text-align: center; padding: 3rem 1rem; background-color: #f4f4f4; border-radius: 8px; }
+        .hero h1 { margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; color: #666; }
+        footer { background-color: #333; color: #fff; text-align: center; padding: 1rem; position: relative; bottom: 0; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <div th:replace="~{fragments/header :: headerFragment}"></div>
+
+    <main>
+        <section class="hero">
+            <h1>웹사이트에 오신 것을 환영합니다!</h1>
+            <p>이곳은 게시판!</p>
+        </section>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footerFragment}"></div>
+
+</body>
+</html>

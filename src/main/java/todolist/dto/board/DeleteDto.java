@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeleteDto {
+
     private Long foreign_key;
     private Long key;
+    
 }
 
