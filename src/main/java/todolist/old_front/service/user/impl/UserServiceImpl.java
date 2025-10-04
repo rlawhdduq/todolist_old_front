@@ -32,6 +32,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public AuthUserDto joinUser(JoinUserDto joinUserDto)
     {
+        String birth = joinUserDto.getBirth().replaceAll("-", "").substring(2);
+        joinUserDto.setBirth(birth);
         AuthUserDto callRes = webClient.post()
                                 .uri(gatewayUrl+"/api/v1/user")
                                 .contentType(MediaType.APPLICATION_JSON)
