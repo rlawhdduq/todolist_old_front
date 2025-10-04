@@ -31,52 +31,54 @@
     </style>
     <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
-<body class="form-page-body"> 
+<body> 
+
     <div th:replace="~{fragments/header :: header}"></div>
 
-    <div class="form-container">
-        <h1>회원가입</h1>
-        
-        <form th:object="${JoinUserDto}" th:action="@{/api/v1/user}" method="post">
-            <div class="form-group">
-                <label for="id">아이디</label>
-                <input type="text" th:field="*{id}" required>
-            </div>
-            <div class="form-group">
-                <label for="password">비밀번호</label>
-                <input type="password" th:field="*{password}" required>
-            </div>
-            <div class="form-group">
-                <label for="addr">주소</label>
-                <input type="text" th:field="*{addr}">
-            </div>
-            <div class="form-group">
-                <label for="addr_dt">상세주소</label>
-                <input type="text" th:field="*{addr_dt}">
-            </div>
-            <div class="form-group">
-                <label for="birth">생년월일</label>
-                <input type="date" th:field="*{birth}">
-            </div>
-            <div class="form-group">
-                <label for="ph">전화번호</label>
-                <input type="tel" th:field="*{ph}">
-            </div>
-            <div class="form-group">
-                <label>성별</label>
-                <div class="gender-group">
-                    <label>
-                        <input type="radio" th:field="*{gender}" value="M"> 남자
-                    </label>
-                    <label>
-                        <input type="radio" th:field="*{gender}" value="F"> 여자
-                    </label>
+    <main>
+        <div class="form-container">
+            <h1>회원가입</h1>
+            
+            <form th:object="${JoinUserDto}" th:action="@{/api/v1/user}" method="post">
+                <div class="form-group">
+                    <label for="id">아이디</label>
+                    <input type="text" th:field="*{id}" required>
                 </div>
-            </div>
-            <button type="submit" class="submit-btn">가입하기</button>
-        </form>
-    </div>
-
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" th:field="*{password}" required>
+                </div>
+                <div class="form-group">
+                    <label for="addr">주소</label>
+                    <input type="text" th:field="*{addr}">
+                </div>
+                <div class="form-group">
+                    <label for="addr_dt">상세주소</label>
+                    <input type="text" th:field="*{addr_dt}">
+                </div>
+                <div class="form-group">
+                    <label for="birth">생년월일</label>
+                    <input type="date" th:field="*{birth}">
+                </div>
+                <div class="form-group">
+                    <label for="ph">전화번호</label>
+                    <input type="tel" th:field="*{ph}">
+                </div>
+                <div class="form-group">
+                    <label>성별</label>
+                    <div class="gender-group">
+                        <label>
+                            <input type="radio" th:field="*{gender}" value="M"> 남자
+                        </label>
+                        <label>
+                            <input type="radio" th:field="*{gender}" value="F"> 여자
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">가입하기</button>
+            </form>
+        </div>
+    </main>
     <div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
