@@ -23,7 +23,7 @@ public class AuthServiceImpl implements AuthService{
         String callRes = webClient.post()
                                 .uri(gatewayUrl+"/api/v1/auth")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .bodyValue(authInfoDto, null)
+                                .bodyValue(authInfoDto)
                                 .retrieve()
                                 .bodyToMono(String.class).block();
         return callRes;

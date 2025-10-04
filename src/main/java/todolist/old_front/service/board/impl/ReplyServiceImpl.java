@@ -27,7 +27,7 @@ public class ReplyServiceImpl implements ReplyService{
         webClient.post()
                 .uri(gatewayUrl+"/api/v1/board/reply")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(replyDto, null)
+                .bodyValue(replyDto)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -41,7 +41,7 @@ public class ReplyServiceImpl implements ReplyService{
         webClient.put()
                 .uri(gatewayUrl+"/api/v1/board/reply")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(replyDto, null)
+                .bodyValue(replyDto)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

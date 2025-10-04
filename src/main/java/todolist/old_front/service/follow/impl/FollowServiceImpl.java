@@ -28,7 +28,7 @@ public class FollowServiceImpl implements FollowService{
         webClient.post()
                 .uri(gatewayUrl+"/api/v1/follow")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(followDto, null)
+                .bodyValue(followDto)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

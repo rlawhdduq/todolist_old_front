@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService{
         AuthUserDto callRes = webClient.post()
                                 .uri(gatewayUrl+"/api/v1/user")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .bodyValue(joinUserDto, null)
+                                .bodyValue(joinUserDto)
                                 .retrieve()
                                 .bodyToMono(AuthUserDto.class).block();
         return callRes;
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
         AuthUserDto callRes = webClient.post()
                                 .uri(gatewayUrl+"/api/v1/user/login")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .bodyValue(loginUserDto, null)
+                                .bodyValue(loginUserDto)
                                 .retrieve()
                                 .bodyToMono(AuthUserDto.class).block();
         return callRes;

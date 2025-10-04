@@ -27,7 +27,7 @@ public class TodoServiceImpl implements TodoService{
         webClient.post()
                 .uri(gatewayUrl+"/api/v1/board/todo")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(todolistDto, null)
+                .bodyValue(todolistDto)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -41,7 +41,7 @@ public class TodoServiceImpl implements TodoService{
         webClient.put()
                 .uri(gatewayUrl+"/api/v1/board/todo")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(todolistDto, null)
+                .bodyValue(todolistDto)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
