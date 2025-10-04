@@ -4,6 +4,7 @@ package todolist.old_front.controller
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,15 +33,16 @@ public class BoardController {
 
     // 게시판
     @RequestMapping(method=RequestMethod.GET)
-    public String getBoardList(GetBoardDto getBoardDto)
+    public String getBoardList(Model model, GetBoardDto getBoardDto)
     {
        List<BoardListDto> boardList = boardService.getBoard(getBoardDto);
+       model.addAttribute("BoardList", boardList);
        return "board/board";
     }
     
     // 게시글
     @RequestMapping(path="/{boardId}", method=RequestMethod.GET)
-    public String getBoardDetail(@PathVariable Long boardId)
+    public String getBoardDetail(Model model, @PathVariable Long boardId)
     {
         BoardDetailDto detailBoard = boardService.getDetailBoard(boardId);
         List<ReplyDto> replyList = replyService.getReply(boardId);
@@ -49,6 +51,7 @@ public class BoardController {
         detailBoard.setReply(replyList);
         detailBoard.setTodolist(todolist);
 
+        model.addAttribute("BoardDetail", detailBoard);
         return "board/boardDetail";
     }
     
