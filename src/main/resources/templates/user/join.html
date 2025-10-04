@@ -31,14 +31,13 @@
     </style>
     <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
-<body>
-
+<body class="form-page-body"> 
     <div th:replace="~{fragments/header :: header}"></div>
 
-    <div class="join-container">
+    <div class="form-container">
         <h1>회원가입</h1>
         
-        <form th:object="${userDto}" th:action="@{/api/v1/user}" method="post">
+        <form th:object="${JoinUserDto}" th:action="@{/api/v1/user}" method="post">
             <div class="form-group">
                 <label for="id">아이디</label>
                 <input type="text" th:field="*{id}" required>

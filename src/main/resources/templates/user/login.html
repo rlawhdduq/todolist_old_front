@@ -6,14 +6,14 @@
     <title>MyDays</title>
     <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
-<body>
+<body class="form-page-body">
 
     <div th:replace="~{fragments/header :: header}"></div>
 
     <div class="form-container">
         <h1>로그인</h1>
         
-        <form th:object="${loginDto}" th:action="@{/api/v1/user/login}" method="post">
+        <form th:object="${LoginUserDto}" th:action="@{/api/v1/user/login}" method="post">
             <div class="form-group">
                 <label for="id">아이디</label>
                 <input type="text" th:field="*{id}" required>
