@@ -107,6 +107,17 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public List<BoardListDto> getAllBoard()
+    {
+        List<BoardListDto> boardList = webClient.get()
+                                                .uri(gatewayUrl+"/api/v1//all")
+                                                .retrieve()
+                                                .bodyToMono(new ParameterizedTypeReference<List<BoardListDto>>() {})
+                                                .block();
+        return boardList;
+    }
+
+    @Override
     public BoardDetailDto getDetailBoard(Long boardId)
     {
         BoardDetailDto detailBoard = webClient.get()

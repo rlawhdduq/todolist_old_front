@@ -14,6 +14,7 @@ public interface BoardService {
     String delete(Long boardId, Long userId); // boardId+userId
     String detailDelete(List<Long> boardIds, Long userId); // 아마 이건 다중삭제인듯?
     List<BoardListDto> getBoard(GetBoardDto getBoardDto);
+    List<BoardListDto> getAllBoard();
     BoardDetailDto getDetailBoard(Long boardId);
 
 }
