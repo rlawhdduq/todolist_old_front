@@ -22,7 +22,8 @@ public class WebConfig implements WebMvcConfigurer{
                                                         "/api/v1/user/join");
         List<String> excludeUrlController = Arrays.asList("/user/login",
                                                                 "/user/join");
-        List<String> excludeUrlCommon = Arrays.asList("/css/**", 
+        List<String> excludeUrlCommon = Arrays.asList("/",
+                                                            "/css/**", 
                                                             "/error", 
                                                             "/*.ico");
 
