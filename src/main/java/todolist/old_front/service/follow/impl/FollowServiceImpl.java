@@ -56,10 +56,7 @@ public class FollowServiceImpl implements FollowService{
     public Map<String, List<Long>> getFollowing(Long userId)
     {
         Map<String, List<Long>> followerList = webClient.get()
-                                            .uri(
-                                                uriBuilder -> uriBuilder.path(String.format(gatewayUrl+"/api/v1/follow/{userId}", userId))
-                                                                        .build()
-                                                )
+                                            .uri(gatewayUrl+"/api/v1/follow/{userId}", userId)
                                             .retrieve()
                                             .bodyToMono(new ParameterizedTypeReference<Map<String, List<Long>>>() {})
                                             .block();
