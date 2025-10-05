@@ -57,7 +57,7 @@ public class FollowServiceImpl implements FollowService{
     {
         Map<String, List<Long>> followerList = webClient.get()
                                             .uri(
-                                                uriBuilder -> uriBuilder.path(gatewayUrl+"/api/v1/folow")
+                                                uriBuilder -> uriBuilder.path(gatewayUrl+"/api/v1/follow")
                                                                         .queryParam("userId", userId)
                                                                         .build()
                                                 )
