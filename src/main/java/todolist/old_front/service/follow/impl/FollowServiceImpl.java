@@ -27,6 +27,7 @@ public class FollowServiceImpl implements FollowService{
         String res = "등록되었습니다.";
         webClient.post()
                 .uri(gatewayUrl+"/api/v1/follow")
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(followDto)
                 .retrieve()
@@ -46,6 +47,7 @@ public class FollowServiceImpl implements FollowService{
                                             .queryParam("follower_user_id", followDto.getFollower_user_id())
                                             .build()
                     )
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -57,6 +59,7 @@ public class FollowServiceImpl implements FollowService{
     {
         Map<String, List<Long>> followerList = webClient.get()
                                             .uri(gatewayUrl+"/api/v1/follow/{userId}", userId)
+                                            .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                                             .retrieve()
                                             .bodyToMono(new ParameterizedTypeReference<Map<String, List<Long>>>() {})
                                             .block();
