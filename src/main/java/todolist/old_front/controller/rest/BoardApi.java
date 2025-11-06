@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpSession;
 import todolist.old_front.dto.board.BoardDetailDto;
 import todolist.old_front.dto.board.BoardDto;
 import todolist.old_front.dto.board.reply.ReplyDto;
@@ -30,50 +31,50 @@ public class BoardApi {
 
     // Board
     @RequestMapping(path="/board/detail/{boardId}", method=RequestMethod.GET)
-    public BoardDetailDto getBoardDetail(@PathVariable Long boardId)
+    public BoardDetailDto getBoardDetail(@PathVariable Long boardId, HttpSession session)
     {
-        BoardDetailDto detailBoard = boardService.getDetailBoard(boardId);
+        BoardDetailDto detailBoard = boardService.getDetailBoard(boardId, session.getAttribute("token").toString());
         return detailBoard;
     }
     
     @RequestMapping(path="/board", method=RequestMethod.POST)
-    public void insertBoard(BoardDto boardDto) {
-        boardService.insert(boardDto);
+    public void insertBoard(BoardDto boardDto, HttpSession session) {
+        boardService.insert(boardDto, session.getAttribute("token").toString());
         return;
     }
     @RequestMapping(path="/board", method=RequestMethod.PUT)
-    public void updateBoard(BoardDto boardDto)
+    public void updateBoard(BoardDto boardDto, HttpSession session)
     {
-        boardService.update(boardDto);
+        boardService.update(boardDto, session.getAttribute("token").toString());
         return;
     }
     @RequestMapping(path="/board", method=RequestMethod.DELETE)
-    public void deleteBoard(@RequestParam Long boardId, Long userId)
+    public void deleteBoard(@RequestParam Long boardId, Long userId, HttpSession session)
     {
-        boardService.delete(boardId, userId);
+        boardService.delete(boardId, userId, session.getAttribute("token").toString());
         return;
     }
     @RequestMapping(path="/board/detail", method=RequestMethod.DELETE)
-    public void detailDeleteBoard(@RequestParam List<Long> boardIds, Long userId)
+    public void detailDeleteBoard(@RequestParam List<Long> boardIds, Long userId, HttpSession session)
     {
-        boardService.detailDelete(boardIds, userId);
+        boardService.detailDelete(boardIds, userId, session.getAttribute("token").toString());
         return;
     }
     
     // Reply
     @RequestMapping(path="/reply", method=RequestMethod.POST)
-    public String insertReply(ReplyDto replyDto)
+    public String insertReply(ReplyDto replyDto, HttpSession session)
     {
         String res = "등록되었습니다.";
-        replyService.insert(replyDto);
+        replyService.insert(replyDto, session.getAttribute("token").toString());
         return res;
     }
 
     @RequestMapping(path="/reply", method=RequestMethod.PUT)
-    public String updateReply(ReplyDto replyDto)
+    public String updateReply(ReplyDto replyDto, HttpSession session)
     {
         String res = "수정되었습니다.";
-        replyService.update(replyDto);
+        replyService.update(replyDto, session.getAttribute("token").toString());
         return res;
     }
     // Todo

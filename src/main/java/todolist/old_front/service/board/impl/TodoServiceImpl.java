@@ -21,11 +21,12 @@ public class TodoServiceImpl implements TodoService{
     private WebClient webClient;
 
     @Override
-    public String insert(TodolistDto todolistDto)
+    public String insert(TodolistDto todolistDto, String token)
     {
         String res = "등록되었습니다.";
         webClient.post()
                 .uri(gatewayUrl+"/api/v1/board/todo")
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(todolistDto)
                 .retrieve()
@@ -35,11 +36,12 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
-    public String update(TodolistDto todolistDto)
+    public String update(TodolistDto todolistDto, String token)
     {
         String res = "수정되었습니다.";
         webClient.put()
                 .uri(gatewayUrl+"/api/v1/board/todo")
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(todolistDto)
                 .retrieve()
@@ -49,7 +51,7 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
-    public String delete(Long boardId, Long todoId)
+    public String delete(Long boardId, Long todoId, String token)
     {
         String res = "삭제되었습니다.";
         webClient.delete()
@@ -59,6 +61,7 @@ public class TodoServiceImpl implements TodoService{
                                             .queryParam("todoId", todoId)
                                             .build()
                     )
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -66,7 +69,7 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
-    public String detailDelete(Long todoId)
+    public String detailDelete(Long todoId, String token)
     {
         String res = "삭제되었습니다.";
         webClient.delete()
@@ -75,6 +78,7 @@ public class TodoServiceImpl implements TodoService{
                                             .queryParam("todoId", todoId)
                                             .build()
                     )
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -82,7 +86,7 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
-    public List<TodolistDto> getTodolist(Long boardId)
+    public List<TodolistDto> getTodolist(Long boardId, String token)
     {
         List<TodolistDto> todolist = webClient.get()
                                             .uri(
@@ -90,6 +94,7 @@ public class TodoServiceImpl implements TodoService{
                                                                         .queryParam("boardId", boardId)
                                                                         .build()
                                                 )
+                                            .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                                             .retrieve()
                                             .bodyToMono(new ParameterizedTypeReference<List<TodolistDto>>() {})
                                             .block();

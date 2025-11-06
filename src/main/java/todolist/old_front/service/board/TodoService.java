@@ -6,10 +6,10 @@ import todolist.old_front.dto.board.todolist.TodolistDto;
 
 public interface TodoService {
 
-    String insert(TodolistDto todolistDto);
-    String update(TodolistDto todolistDto);
-    String delete(Long boardId, Long todoId);
-    String detailDelete(Long todoId);
-    List<TodolistDto> getTodolist(Long boardId);
+    String insert(TodolistDto todolistDto, String token);
+    String update(TodolistDto todolistDto, String token);
+    String delete(Long boardId, Long todoId, String token);
+    String detailDelete(Long todoId, String token);
+    List<TodolistDto> getTodolist(Long boardId, String token);
     
 }

@@ -22,7 +22,7 @@ public class FollowServiceImpl implements FollowService{
     private WebClient webClient;
 
     @Override
-    public String insert(FollowDto followDto)
+    public String insert(FollowDto followDto, String token)
     {
         String res = "등록되었습니다.";
         webClient.post()
@@ -36,7 +36,7 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public String delete(FollowDto followDto)
+    public String delete(FollowDto followDto, String token)
     {
         String res = "삭제되었습니다.";
         webClient.put()
@@ -53,7 +53,7 @@ public class FollowServiceImpl implements FollowService{
     }
 
     @Override
-    public Map<String, List<Long>> getFollowing(Long userId)
+    public Map<String, List<Long>> getFollowing(Long userId, String token)
     {
         Map<String, List<Long>> followerList = webClient.get()
                                             .uri(gatewayUrl+"/api/v1/follow/{userId}", userId)

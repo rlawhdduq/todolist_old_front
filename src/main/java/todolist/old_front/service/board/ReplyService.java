@@ -6,12 +6,12 @@ import todolist.old_front.dto.board.reply.ReplyDto;
 
 public interface ReplyService {
     
-    String insert(ReplyDto replyDto);
-    String update(ReplyDto replyDto);
-    String delete(Long boardId, Long replyId);
-    String detailDelete(Long replyId);
-    List<ReplyDto> getReply(Long boardId);
-    String deleteFromBoard(Long boardId);
-    String detailDeleteFromBoard(List<Long> boardIds);
+    String insert(ReplyDto replyDto, String token);
+    String update(ReplyDto replyDto, String token);
+    String delete(Long boardId, Long replyId, String token);
+    String detailDelete(Long replyId, String token);
+    List<ReplyDto> getReply(Long boardId, String token);
+    String deleteFromBoard(Long boardId, String token);
+    String detailDeleteFromBoard(List<Long> boardIds, String token);
     
 }

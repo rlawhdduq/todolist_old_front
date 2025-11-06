@@ -28,10 +28,11 @@ public class BoardServiceImpl implements BoardService{
     private WebClient webClient;
     
     @Override
-    public Long insert(BoardDto boardDto)
+    public Long insert(BoardDto boardDto, String token)
     {
         Long callRes = webClient.post()
                                 .uri(gatewayUrl+"/api/v1/board")
+                                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .bodyValue(boardDto)
                                 .retrieve()
@@ -41,10 +42,11 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Long update(BoardDto boardDto)
+    public Long update(BoardDto boardDto, String token)
     {
         Long callRes = webClient.put()
                                 .uri(gatewayUrl+"/api/v1/board")
+                                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .bodyValue(boardDto)
                                 .retrieve()
@@ -54,7 +56,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public String delete(Long boardId, Long userId)
+    public String delete(Long boardId, Long userId, String token)
     {
         String res = "삭제되었습니다.";
         webClient.delete()
@@ -64,6 +66,7 @@ public class BoardServiceImpl implements BoardService{
                                             .queryParam("userId", userId)
                                             .build()
                     )
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -71,7 +74,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public String detailDelete(List<Long> boardIds, Long userId)
+    public String detailDelete(List<Long> boardIds, Long userId, String token)
     {
         String res = "삭제되었습니다.";
         webClient.delete()
@@ -81,6 +84,7 @@ public class BoardServiceImpl implements BoardService{
                                             .queryParam("userId", userId)
                                             .build()
                     )
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -88,7 +92,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public List<BoardListDto> getBoard(GetBoardDto getBoardDto)
+    public List<BoardListDto> getBoard(GetBoardDto getBoardDto, String token)
     {
         ObjectMapper obj = new ObjectMapper();
         Map<String, Object> data = obj.convertValue(getBoardDto, new TypeReference<>() {});
@@ -100,6 +104,7 @@ public class BoardServiceImpl implements BoardService{
                                                     });
                                                     return uriBuilder.build();
                                                 })
+                                                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                                                 .retrieve()
                                                 .bodyToMono(new ParameterizedTypeReference<List<BoardListDto>>() {})
                                                 .block();
@@ -118,10 +123,11 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public BoardDetailDto getDetailBoard(Long boardId)
+    public BoardDetailDto getDetailBoard(Long boardId, String token)
     {
         BoardDetailDto detailBoard = webClient.get()
                                             .uri( uriBuilder-> uriBuilder.path(String.format("%s/{boardId}", gatewayUrl+"/api/v1/board")).build(boardId))
+                                            .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                                             .retrieve()
                                             .bodyToMono(BoardDetailDto.class)
                                             .block();

@@ -19,6 +19,8 @@ import todolist.old_front.service.board.impl.TodoServiceImpl;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping("/board")
@@ -33,20 +35,20 @@ public class BoardController {
 
     // 게시판
     @RequestMapping(method=RequestMethod.GET)
-    public String getBoardList(Model model, GetBoardDto getBoardDto)
+    public String getBoardList(Model model, GetBoardDto getBoardDto, HttpSession session)
     {
-       List<BoardListDto> boardList = boardService.getBoard(getBoardDto);
+       List<BoardListDto> boardList = boardService.getBoard(getBoardDto, session.getAttribute("token").toString());
        model.addAttribute("BoardList", boardList);
        return "board/board";
     }
     
     // 게시글
     @RequestMapping(path="/{boardId}", method=RequestMethod.GET)
-    public String getBoardDetail(Model model, @PathVariable Long boardId)
+    public String getBoardDetail(Model model, @PathVariable Long boardId, HttpSession session)
     {
-        BoardDetailDto detailBoard = boardService.getDetailBoard(boardId);
-        List<ReplyDto> replyList = replyService.getReply(boardId);
-        List<TodolistDto> todolist = todoService.getTodolist(boardId);
+        BoardDetailDto detailBoard = boardService.getDetailBoard(boardId, session.getAttribute("token").toString());
+        List<ReplyDto> replyList = replyService.getReply(boardId, session.getAttribute("token").toString());
+        List<TodolistDto> todolist = todoService.getTodolist(boardId, session.getAttribute("token").toString());
 
         detailBoard.setReply(replyList);
         detailBoard.setTodolist(todolist);

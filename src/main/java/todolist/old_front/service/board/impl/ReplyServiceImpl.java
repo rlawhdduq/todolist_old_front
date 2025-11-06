@@ -21,11 +21,12 @@ public class ReplyServiceImpl implements ReplyService{
     private WebClient webClient;
 
     @Override
-    public String insert(ReplyDto replyDto)
+    public String insert(ReplyDto replyDto, String token)
     {
         String res = "등록되었습니다.";
         webClient.post()
                 .uri(gatewayUrl+"/api/v1/board/reply")
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(replyDto)
                 .retrieve()
@@ -35,11 +36,12 @@ public class ReplyServiceImpl implements ReplyService{
     }
 
     @Override
-    public String update(ReplyDto replyDto)
+    public String update(ReplyDto replyDto, String token)
     {
         String res = "수정되었습니다.";
         webClient.put()
                 .uri(gatewayUrl+"/api/v1/board/reply")
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(replyDto)
                 .retrieve()
@@ -49,7 +51,7 @@ public class ReplyServiceImpl implements ReplyService{
     }
 
     @Override
-    public String delete(Long boardId, Long replyId)
+    public String delete(Long boardId, Long replyId, String token)
     {
         String res = "삭제되었습니다.";
         webClient.delete()
@@ -59,6 +61,7 @@ public class ReplyServiceImpl implements ReplyService{
                                             .queryParam("replyId", replyId)
                                             .build()
                     )
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -66,7 +69,7 @@ public class ReplyServiceImpl implements ReplyService{
     }
 
     @Override
-    public String detailDelete(Long replyId)
+    public String detailDelete(Long replyId, String token)
     {
         String res = "삭제되었습니다.";
         webClient.delete()
@@ -75,6 +78,7 @@ public class ReplyServiceImpl implements ReplyService{
                                             .queryParam("replyId", replyId)
                                             .build()
                     )
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -82,7 +86,7 @@ public class ReplyServiceImpl implements ReplyService{
     }
 
     @Override
-    public List<ReplyDto> getReply(Long boardId)
+    public List<ReplyDto> getReply(Long boardId, String token)
     {
         List<ReplyDto> replyList = webClient.get()
                                             .uri(
@@ -90,6 +94,7 @@ public class ReplyServiceImpl implements ReplyService{
                                                                         .queryParam("boardId", boardId)
                                                                         .build()
                                                 )
+                                            .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
                                             .retrieve()
                                             .bodyToMono(new ParameterizedTypeReference<List<ReplyDto>>() {})
                                             .block();
@@ -97,14 +102,14 @@ public class ReplyServiceImpl implements ReplyService{
     }
 
     @Override
-    public String deleteFromBoard(Long boardId)
+    public String deleteFromBoard(Long boardId, String token)
     {
         String res = "수정되었습니다.";
         return res;
     }
     
     @Override
-    public String detailDeleteFromBoard(List<Long> boardIds)
+    public String detailDeleteFromBoard(List<Long> boardIds, String token)
     {
         String res = "수정되었습니다.";
         return res;
