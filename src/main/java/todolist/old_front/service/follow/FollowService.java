@@ -7,8 +7,8 @@ import todolist.old_front.dto.follow.FollowDto;
 
 public interface FollowService {
     
-    String insert(FollowDto followDto);
-    String delete(FollowDto followDto);
-    Map<String, List<Long>> getFollowing(Long userId);
+    String insert(FollowDto followDto, String token);
+    String delete(FollowDto followDto, String token);
+    Map<String, List<Long>> getFollowing(Long userId, String token);
 
 }
