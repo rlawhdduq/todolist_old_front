@@ -26,7 +26,7 @@ public class ReplyServiceImpl implements ReplyService{
         String res = "등록되었습니다.";
         webClient.post()
                 .uri(gatewayUrl+"/api/v1/board/reply")
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                .header("token", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(replyDto)
                 .retrieve()
@@ -41,7 +41,7 @@ public class ReplyServiceImpl implements ReplyService{
         String res = "수정되었습니다.";
         webClient.put()
                 .uri(gatewayUrl+"/api/v1/board/reply")
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                .header("token", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(replyDto)
                 .retrieve()
@@ -61,7 +61,7 @@ public class ReplyServiceImpl implements ReplyService{
                                             .queryParam("replyId", replyId)
                                             .build()
                     )
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                .header("token", token)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -78,7 +78,7 @@ public class ReplyServiceImpl implements ReplyService{
                                             .queryParam("replyId", replyId)
                                             .build()
                     )
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                .header("token", token)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -94,7 +94,7 @@ public class ReplyServiceImpl implements ReplyService{
                                                                         .queryParam("boardId", boardId)
                                                                         .build()
                                                 )
-                                            .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                                            .header("token", token)
                                             .retrieve()
                                             .bodyToMono(new ParameterizedTypeReference<List<ReplyDto>>() {})
                                             .block();

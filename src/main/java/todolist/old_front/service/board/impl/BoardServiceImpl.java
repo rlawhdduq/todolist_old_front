@@ -32,7 +32,7 @@ public class BoardServiceImpl implements BoardService{
     {
         Long callRes = webClient.post()
                                 .uri(gatewayUrl+"/api/v1/board")
-                                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                                .header("token", token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .bodyValue(boardDto)
                                 .retrieve()
@@ -46,7 +46,7 @@ public class BoardServiceImpl implements BoardService{
     {
         Long callRes = webClient.put()
                                 .uri(gatewayUrl+"/api/v1/board")
-                                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                                .header("token", token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .bodyValue(boardDto)
                                 .retrieve()
@@ -66,7 +66,7 @@ public class BoardServiceImpl implements BoardService{
                                             .queryParam("userId", userId)
                                             .build()
                     )
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                .header("token", token)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -84,7 +84,7 @@ public class BoardServiceImpl implements BoardService{
                                             .queryParam("userId", userId)
                                             .build()
                     )
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                .header("token", token)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -104,7 +104,7 @@ public class BoardServiceImpl implements BoardService{
                                                     });
                                                     return uriBuilder.build();
                                                 })
-                                                .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                                                .header("token", token)
                                                 .retrieve()
                                                 .bodyToMono(new ParameterizedTypeReference<List<BoardListDto>>() {})
                                                 .block();
@@ -127,7 +127,7 @@ public class BoardServiceImpl implements BoardService{
     {
         BoardDetailDto detailBoard = webClient.get()
                                             .uri( uriBuilder-> uriBuilder.path(String.format("%s/{boardId}", gatewayUrl+"/api/v1/board")).build(boardId))
-                                            .headers(httpHeaders -> httpHeaders.setBearerAuth(token))
+                                            .header("token", token)
                                             .retrieve()
                                             .bodyToMono(BoardDetailDto.class)
                                             .block();
