@@ -50,6 +50,7 @@ public class UserApi {
     public String loginUser(LoginUserDto loginUserDto, @RequestParam(defaultValue="/") String redirectUrl, HttpServletRequest request)
     {
         AuthUserDto authUserDto = userService.loginUser(loginUserDto);
+        System.out.println("Url :: "+redirectUrl);
         if( authUserDto != null )
         {
             createUserSession(authUserDto, request);
