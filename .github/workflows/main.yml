@@ -31,7 +31,7 @@ jobs:
             echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > private_key.pem
             chmod 600 private_key.pem
             # 이전 .jar 먼저 삭제
-            ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2222 ubuntukjy@${{ secrets.HOST_IP }} 'rm -f /spring/docker/compose/gateway/jar/*.jar'
+            ssh -o StrictHostKeyChecking=no -i private_key.pem -p 2222 ubuntukjy@${{ secrets.HOST_IP }} rm -f /spring/docker/compose/gateway/jar/*.jar
             # 새로운 .jar 복사
             scp -o StrictHostKeyChecking=no -i private_key.pem -P 2222 $GITHUB_WORKSPACE/build/libs/*.jar ubuntukjy@${{ secrets.HOST_IP }}:/spring/docker/compose/old_front/jar
             
