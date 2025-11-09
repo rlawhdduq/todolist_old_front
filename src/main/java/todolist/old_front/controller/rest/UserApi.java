@@ -3,6 +3,8 @@ package todolist.old_front.controller.rest;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,7 @@ public class UserApi {
     private AuthServiceImpl authService;
     @Autowired
     private FollowServiceImpl followService;
+    private static final Logger log = LoggerFactory.getLogger(UserApi.class);
     
     @RequestMapping(path="/{userId}", method=RequestMethod.GET)
     public AuthUserDto getUser(@PathVariable Long userId)
@@ -54,7 +57,11 @@ public class UserApi {
     public String loginUser(LoginUserDto loginUserDto, @RequestParam(defaultValue="/") String redirectUrl, HttpServletRequest request)
     {
         // 1. 로그인 처리 후
+        log.info("로그인 User Dto 확인");
+        log.info("{}", loginUserDto);
         AuthUserDto authUserDto = userService.loginUser(loginUserDto);
+        log.info("로그인 후 Auth User Dto 확인");
+        log.info("{}", authUserDto);
         // 2. 토큰값을 받아온다
         String token = authService.getToken(new AuthInfoDto(authUserDto.getUser_id(), authUserDto.getId(), authUserDto.getUser_type()));
 
