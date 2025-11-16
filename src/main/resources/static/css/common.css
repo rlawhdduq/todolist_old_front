@@ -77,3 +77,112 @@ body.form-page-body {
 .submit-btn:hover {
     background-color: #0056b3;
 }
+
+.button {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 1em;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+}
+.auth-section {
+    text-align: center;
+    padding: 20px;
+}
+
+/* 게시글 스타일 */
+.board-feed {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+.board-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    overflow: hidden; /* 자식 요소의 margin이 부모를 밀어내는 것 방지 */
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: #f9f9f9;
+}
+.card-author {
+    font-weight: 600;
+    font-size: 1.1em;
+}
+.card-date {
+    font-size: 0.9em;
+    color: #666;
+}
+.card-content {
+    padding: 20px;
+    font-size: 1.05em;
+    line-height: 1.6;
+    /* (줄바꿈/공백을 HTML에 적용) */
+    white-space: pre-wrap; 
+}
+.card-tags {
+    padding: 0 20px 15px;
+    display: flex;
+    gap: 10px;
+}
+.tag {
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 500;
+    background-color: #eee;
+}
+.tag-done { /* (FulfillmentOrNot = 'Y') */
+    background-color: #d4edda;
+    color: #155724;
+}
+.tag-pending { /* (FulfillmentOrNot = 'N') */
+    background-color: #f8d7da;
+    color: #721c24;
+}
+.card-todolist {
+    padding: 0 20px 20px;
+    border-top: 1px solid #f0f0f0;
+    margin: 0 20px 20px;
+}
+.card-todolist h4 {
+    margin-bottom: 10px;
+    color: #333;
+}
+.todo-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    color: #555;
+}
+.todo-checkbox {
+    font-size: 1.2em;
+}
+.todo-content-done {
+    text-decoration: line-through;
+    color: #999;
+}
+.empty-feed {
+    text-align: center;
+    color: #888;
+    padding: 50px;
+    font-size: 1.2em;
+}

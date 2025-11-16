@@ -2,6 +2,8 @@ package todolist.old_front.controller
 ;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import todolist.old_front.dto.board.BoardListDto;
 import todolist.old_front.dto.board.GetBoardDto;
 import todolist.old_front.dto.board.reply.ReplyDto;
 import todolist.old_front.dto.board.todolist.TodolistDto;
+import todolist.old_front.dto.user.AuthUserDto;
 import todolist.old_front.service.board.impl.BoardServiceImpl;
 import todolist.old_front.service.board.impl.ReplyServiceImpl;
 import todolist.old_front.service.board.impl.TodoServiceImpl;
@@ -35,11 +38,12 @@ public class BoardController {
 
     // 게시판
     @RequestMapping(method=RequestMethod.GET)
-    public String getBoardList(Model model, GetBoardDto getBoardDto, HttpSession session)
+    public String getBoardList(Model model, HttpSession session)
     {
-       List<BoardListDto> boardList = boardService.getBoard(getBoardDto, session.getAttribute("token").toString());
-       model.addAttribute("BoardList", boardList);
-       return "board/board";
+        AuthUserDto authUserDto = (AuthUserDto) session.getAttribute("loginUser");
+        List<BoardListDto> boardList = boardService.getBoard(authUserDto.getUser_id(), session.getAttribute("token").toString());
+        model.addAttribute("BoardList", boardList);
+        return "board/board";
     }
     
     // 게시글

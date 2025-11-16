@@ -6,6 +6,24 @@
             <h1>My Awesome Website</h1>
         </header>
 
+        <section class="auth-section">
+
+            <!-- (A) 로그아웃 상태일 때 (isAnonymous): "로그인" 버튼 표시 -->
+            <!-- 클릭 시 /user/login 페이지로 이동 -->
+            <div sec:authorize="isAnonymous()">
+                <a th:href="@{/user/login}" class="button">로그인</a>
+            </div>
+
+            <!-- (B) 로그인 상태일 때 (isAuthenticated): "로그아웃" 버튼 표시 -->
+            <div sec:authorize="isAuthenticated()">
+                <!-- Spring Security는 CSRF 방지를 위해 POST 방식 /logout을 권장 -->
+                <form th:action="@{/api/v1/user/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="button">로그아웃</button>
+                </form>
+            </div>
+
+        </section>
+        
         <nav>
             <ul>
                 <li><a href="/board">Feed</a></li>

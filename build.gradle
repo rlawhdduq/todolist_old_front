@@ -28,12 +28,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // 타임리프 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-webflux' // WebClient
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	
+	implementation 'org.springframework.boot:spring-boot-starter-security' // Security
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // Thymeleaf에서 Spring Security 태그(sec:authorize 등)를 사용할 수 있게 해주는 라이브러리
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'org.springframework.boot:spring-boot-devtools' // 파일이 수정되면 알아서 재빌드 후 배포해주는 의존성(의존성 수정은 포함안됨)
 }
 
 tasks.named('test') {

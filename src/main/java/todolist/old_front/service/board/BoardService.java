@@ -13,7 +13,7 @@ public interface BoardService {
     Long update(BoardDto boardDto, String token);
     String delete(Long boardId, Long userId, String token); // boardId+userId
     String detailDelete(List<Long> boardIds, Long userId, String token); // 아마 이건 다중삭제인듯?
-    List<BoardListDto> getBoard(GetBoardDto getBoardDto, String token);
+    List<BoardListDto> getBoard(Long userId, String token);
     List<BoardListDto> getAllBoard();
     BoardDetailDto getDetailBoard(Long boardId, String token);
 

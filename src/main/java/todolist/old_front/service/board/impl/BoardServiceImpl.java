@@ -78,8 +78,7 @@ public class BoardServiceImpl implements BoardService{
     {
         String res = "삭제되었습니다.";
         webClient.delete()
-                .uri(
-                    uriBuilder -> uriBuilder.path(gatewayUrl+"/api/v1/board")
+                .uri(gatewayUrl+"/api/v1/board", uriBuilder -> uriBuilder
                                             .queryParam("boardIds", boardIds)
                                             .queryParam("userId", userId)
                                             .build()
@@ -92,18 +91,10 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public List<BoardListDto> getBoard(GetBoardDto getBoardDto, String token)
+    public List<BoardListDto> getBoard(Long userId, String token)
     {
-        ObjectMapper obj = new ObjectMapper();
-        Map<String, Object> data = obj.convertValue(getBoardDto, new TypeReference<>() {});
         List<BoardListDto> boardList = webClient.get()
-                                                .uri(uriBuilder -> {
-                                                    uriBuilder.path(gatewayUrl+"/api/v1/board");
-                                                    data.forEach((key, value)-> {
-                                                        uriBuilder.queryParam(key, value);
-                                                    });
-                                                    return uriBuilder.build();
-                                                })
+                                                .uri(gatewayUrl+"/api/v1/board/"+userId)
                                                 .header("token", token)
                                                 .retrieve()
                                                 .bodyToMono(new ParameterizedTypeReference<List<BoardListDto>>() {})
@@ -126,7 +117,7 @@ public class BoardServiceImpl implements BoardService{
     public BoardDetailDto getDetailBoard(Long boardId, String token)
     {
         BoardDetailDto detailBoard = webClient.get()
-                                            .uri( uriBuilder-> uriBuilder.path(String.format("%s/{boardId}", gatewayUrl+"/api/v1/board")).build(boardId))
+                                            .uri(gatewayUrl+"/api/v1/board",  uriBuilder-> uriBuilder.path("/{boardId}").build(boardId))
                                             .header("token", token)
                                             .retrieve()
                                             .bodyToMono(BoardDetailDto.class)
