@@ -10,25 +10,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReplyDto {
-    private Long replyId;
-    private Long boardId;
-    private Long userId;
-    private Long parentId;
+    private Long reply_id;
+    private Long board_id;
+    private Long user_id;
+    private Long parent_id;
     private String content;
-    private Short replyDepth;
-    private LocalDateTime createTime;
+    private Short reply_depth;
+    private LocalDateTime create_time;
     private Character status;
-    private LocalDateTime updateTime;
+    private LocalDateTime update_time;
 
-    public ReplyDto(Long replyId, Long boardId, Long userId, Long parentId, String content,
-    Short replyDepth, LocalDateTime createTime)
+    public ReplyDto(Long reply_id, Long board_id, Long user_id, Long parent_id, String content,
+    Short reply_depth, LocalDateTime create_time)
     {
-        this.replyId = replyId;
-        this.boardId = boardId;
-        this.userId = userId;
-        this.parentId = parentId;
+        this.reply_id = reply_id;
+        this.board_id = board_id;
+        this.user_id = user_id;
+        this.parent_id = parent_id;
         this.content = content;
-        this.replyDepth = replyDepth;
-        this.createTime = createTime;
+        this.reply_depth = reply_depth;
+        this.create_time = create_time;
     }
 }

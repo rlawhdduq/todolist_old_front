@@ -117,7 +117,7 @@ public class BoardServiceImpl implements BoardService{
     public BoardDetailDto getDetailBoard(Long boardId, String token)
     {
         BoardDetailDto detailBoard = webClient.get()
-                                            .uri(gatewayUrl+"/api/v1/board",  uriBuilder-> uriBuilder.path("/{boardId}").build(boardId))
+                                            .uri(gatewayUrl+"/api/v1/board/detail",  uriBuilder-> uriBuilder.path("/{boardId}").build(boardId))
                                             .header("token", token)
                                             .retrieve()
                                             .bodyToMono(BoardDetailDto.class)

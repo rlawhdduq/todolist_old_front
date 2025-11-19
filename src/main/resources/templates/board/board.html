@@ -11,6 +11,12 @@
     <div th:replace="~{fragments/header :: header}"></div>
 
     <main>
+        <div class="action-bar">
+            <a th:href="@{/board/write}" class="btn-write">
+                ✏️ 글쓰기
+            </a>
+        </div>
+        
         <section class="board-feed">
             <!-- (★★★★★ 1. "BoardList"가 비어있는지 확인 ★★★★★) -->
             <div th:if="${BoardList == null or BoardList.isEmpty()}" class="empty-feed">
@@ -20,28 +26,20 @@
             <!-- (★★★★★ 2. "BoardList"로 루프 시작 ★★★★★) -->
             <article class="board-card" th:each="board : ${BoardList}" th:if="${BoardList != null and !BoardList.isEmpty()}">
 
-                <!-- 카드 헤더: 작성자 ID, 작성일 -->
-                <header class="card-header">
-                    <span class="card-author" th:text="|작성자 ID: ${board.user_id}|">작성자 ID: 901186</span>
-                    <span class="card-date" th:if="${board.create_time != null}"
-                          th:text="${#temporals.format(board.create_time, 'yyyy-MM-dd HH:mm')}">2025-11-16 19:00</span>
-                </header>
+                <!-- URL은 /board/{boardId} 형태를 가정합니다 -->
+                <a th:href="@{'/board/' + ${board.board_id}}" class="card-link-wrapper">
+                    <!-- 카드 헤더: 작성자 ID, 작성일 -->
+                    <header class="card-header">
+                        <span class="card-author" th:text="|작성자 ID: ${board.user_id}|">작성자 ID: 901186</span>
+                        <span class="card-date" th:if="${board.create_time != null}"
+                            th:text="${#temporals.format(board.create_time, 'yyyy-MM-dd HH:mm')}">2025-11-16 19:00</span>
+                    </header>
 
-                <!-- 카드 본문: 내용 -->
-                <section class="card-content">
-                    <p th:text="${board.content}">게시글 내용이 여기에 들어갑니다...</p>
-                </section>
-
-                <!-- 카드 태그: 완료 여부, 공개 범위 -->
-                <section class="card-tags">
-                    <span th:if="${board.fullfilment_or_not != null}" 
-                          class="tag"
-                          th:classappend="${board.fullfilment_or_not == 'Y' ? 'tag-done' : 'tag-pending'}"
-                          th:text="${board.fullfilment_or_not == 'Y' ? '완료' : '미완료'}">
-                          완료
-                    </span>
-                    <span class="tag" th:text="${board.scope_of_disclosure}">공개범위</span>
-                </section>
+                    <!-- 카드 본문: 내용 -->
+                    <section class="card-content">
+                        <p th:text="${board.content}">게시글 내용이 여기에 들어갑니다...</p>
+                    </section>
+                </a>
             </article>
         </section>
     </main>

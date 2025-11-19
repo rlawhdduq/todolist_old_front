@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyDays - 게시글 작성</title>
+    
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+
+    <style>
+        /* 이 페이지 전용 스타일 */
+        .form-group { margin-bottom: 1rem; }
+        .form-control { width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        textarea.form-control { resize: vertical; min-height: 200px; }
+        
+        .todo-input-item { background: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px; position: relative; border: 1px solid #eee; }
+        .btn-remove-todo { position: absolute; top: 5px; right: 5px; background: #ff6b6b; color: white; border: none; border-radius: 3px; cursor: pointer; padding: 2px 6px; font-size: 0.8rem; }
+        .btn-add-todo { width: 100%; padding: 10px; background: #4a90e2; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+        .btn-submit { background: #4a90e2; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+        .btn-cancel { background: #999; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; text-decoration: none; margin-right: 10px; }
+    </style>
+</head>
+<body>
+
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <main>
+        <form th:action="@{/board/write}" th:object="${boardDto}" method="post">
+            
+            <div class="detail-grid">
+                <!-- [왼쪽 영역] -->
+                <div class="detail-main-content">
+
+                    <article class="board-card">
+                        <header class="card-header">
+                            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                <h2 style="margin:0;">게시글 작성</h2>
+                                
+                                <!-- 1. 공개 범위 수정 (A, C, F) -->
+                                <div class="board-tags">
+                                    <select th:field="*{scope_of_disclosure}" class="form-control" style="width: auto; display: inline-block; font-size: 0.9rem;">
+                                        <option value="A">전체 공개</option>
+                                        <option value="C">커뮤니티 공개</option>
+                                        <option value="F">친구 공개</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </header>
+
+                        <section class="card-content">
+                            <input type="hidden" th:field="*{user_id}"> 
+
+                            <div class="form-group">
+                                <textarea th:field="*{content}" class="form-control" placeholder="오늘의 기록을 남겨보세요..." required></textarea>
+                            </div>
+
+                            <!-- 2. 이행 시간 삭제됨, 상태값만 남김 -->
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight:bold; display:block; margin-bottom:0.5rem;">진행 상태</label>
+                                <select th:field="*{fulfillment_or_not}" class="form-control">
+                                    <option value="R">진행중 (Ready)</option>
+                                    <option value="F">달성 완료 (Fulfilled)</option>
+                                    <option value="C">취소 (Cancelled)</option>
+                                </select>
+                            </div>
+
+                        </section>
+                    </article>
+
+                    <div style="text-align: right; margin-top: 20px;">
+                        <a href="javascript:history.back()" class="btn-cancel">취소</a>
+                        <button type="submit" class="btn-submit">등록 완료</button>
+                    </div>
+                </div> 
+
+                <!-- [오른쪽 영역] To-Do 리스트 (이전과 동일) -->
+                <aside class="detail-sidebar">
+                    <section class="board-card">
+                        <header class="card-header">
+                            <h2>연관 To-Do</h2>
+                        </header>
+                        <div class="card-content">
+                            <div id="todo-input-container"></div>
+                            <button type="button" class="btn-add-todo" onclick="addTodoInput()">+ To-Do 추가하기</button>
+                        </div>
+                    </section>
+                </aside> 
+
+            </div> 
+        </form>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script>
+        let todoIndex = 0;
+        function addTodoInput() {
+            const container = document.getElementById('todo-input-container');
+            const html = `
+                <div class="todo-input-item" id="todo-item-${todoIndex}">
+                    <button type="button" class="btn-remove-todo" onclick="removeTodo(${todoIndex})">삭제</button>
+                    <div style="margin-bottom: 5px;">
+                        <input type="text" name="todolist[${todoIndex}].todo_type" class="form-control" placeholder="유형 (예: 운동)" style="font-size: 0.9rem; margin-bottom: 3px;">
+                    </div>
+                    <div style="margin-bottom: 5px;">
+                        <input type="text" name="todolist[${todoIndex}].todo_type_detail" class="form-control" placeholder="상세 내용 (예: 스쿼트)" required>
+                    </div>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="number" name="todolist[${todoIndex}].todo_number" class="form-control" placeholder="횟수" style="flex: 1;">
+                        <input type="text" name="todolist[${todoIndex}].todo_unit" class="form-control" placeholder="단위" style="flex: 1;">
+                    </div>
+                    <input type="hidden" name="todolist[${todoIndex}].fulfillment_or_not" value="R">
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+            todoIndex++;
+        }
+        function removeTodo(index) {
+            const item = document.getElementById(`todo-item-${index}`);
+            if (item) item.remove();
+        }
+    </script>
+</body>
+</html>

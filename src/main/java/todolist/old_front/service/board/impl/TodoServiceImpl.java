@@ -89,11 +89,8 @@ public class TodoServiceImpl implements TodoService{
     public List<TodolistDto> getTodolist(Long boardId, String token)
     {
         List<TodolistDto> todolist = webClient.get()
-                                            .uri(
-                                                uriBuilder -> uriBuilder.path(gatewayUrl+"/api/v1/board/todo")
-                                                                        .queryParam("boardId", boardId)
-                                                                        .build()
-                                                )
+                                            .uri(gatewayUrl+"/api/v1/board/todo", 
+                                                uriBuilder -> uriBuilder.path("/{boardId}").build(boardId))
                                             .header("token", token)
                                             .retrieve()
                                             .bodyToMono(new ParameterizedTypeReference<List<TodolistDto>>() {})

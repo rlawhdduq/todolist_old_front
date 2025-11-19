@@ -89,11 +89,8 @@ public class ReplyServiceImpl implements ReplyService{
     public List<ReplyDto> getReply(Long boardId, String token)
     {
         List<ReplyDto> replyList = webClient.get()
-                                            .uri(
-                                                uriBuilder -> uriBuilder.path(gatewayUrl+"/api/v1/board/reply")
-                                                                        .queryParam("boardId", boardId)
-                                                                        .build()
-                                                )
+                                            .uri(gatewayUrl+"/api/v1/board/reply", 
+                                                uriBuilder -> uriBuilder.path("/{boardId}").build(boardId))
                                             .header("token", token)
                                             .retrieve()
                                             .bodyToMono(new ParameterizedTypeReference<List<ReplyDto>>() {})

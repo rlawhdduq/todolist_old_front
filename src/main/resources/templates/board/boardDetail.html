@@ -3,18 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyDays</title>
+    <title>MyDays - 게시글 상세</title>
+    
+    <!-- common.css만 사용 -->
     <link rel="stylesheet" th:href="@{/css/common.css}">
+    
 </head>
 <body>
 
     <div th:replace="~{fragments/header :: header}"></div>
 
     <main>
-        <section class="hero">
-            <h1>웹사이트에 오신 것을 환영합니다!</h1>
-            <p>이곳은 게시글!!</p>
-        </section>
+        
+        <!-- (!! 중요 !!) BoardDetail 객체가 있는지 확인 -->
+        <div th:if="${BoardDetail != null}">
+        
+            <!-- common.css의 .detail-grid로 변경 -->
+            <div class="detail-grid">
+
+                <!-- .detail-main-content로 변경 -->
+                <div class="detail-main-content">
+
+                    <!-- 1. 게시글 본문 카드 (common.css의 .board-card 사용) -->
+                    <article class="board-card">
+                        <header class="card-header">
+                            <div> <!-- div로 묶어서 세로 정렬 -->
+                                <!-- 
+                                    common.css의 .card-header가 flex이므로, 
+                                    이 자식 div들이 가로로 정렬됩니다. 
+                                    이 div에 width: 100%를 주거나, 
+                                    .card-header의 flex-direction을 column으로 바꿔야 합니다.
+                                    일단 인라인 스타일로 width: 100%를 줘서 해결합니다.
+                                -->
+                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                    <span class="card-author" th:text="|작성자 ID: ${BoardDetail.user_id}|">작성자 ID: 12345</span>
+                                    <span class="card-date" th:if="${BoardDetail.create_time != null}"
+                                          th:text="${#temporals.format(BoardDetail.create_time, 'yyyy-MM-dd HH:mm')}">2025-11-17 10:30</span>
+                                </div>
+                                <div class="board-tags">
+                                    <span class="tag" th:text="${BoardDetail.scope_of_disclosure == 'PUBLIC'} ? '전체 공개' : '비공개'">전체 공개</span>
+                                    <!-- 'F'일 때 .tag-done 클래스 사용 (common.css 정의 활용) -->
+                                    <span class="tag tag-done" th:if="${BoardDetail.fulfillment_or_not == 'F'}">
+                                        달성 완료
+                                    </span>
+                                </div>
+                            </div>
+                        </header>
+
+                        <!-- 게시글 내용 (common.css의 .card-content 사용) -->
+                        <section class="card-content">
+                            <div th:text="${BoardDetail.content}">
+                                게시글의 상세 내용입니다.
+                            </div>
+                        </section>
+                    </article>
+
+                    <!-- 2. 댓글 목록 카드 (common.css의 .board-card 사용) -->
+                    <section class="board-card">
+                        <header class="card-header">
+                            <h2>댓글</h2>
+                        </header>
+                        <div class="card-content">
+                            <div th:if="${BoardDetail.reply == null or BoardDetail.reply.isEmpty()}">
+                                <p class="empty-feed" style="padding: 1rem 0; font-size: 1em;">아직 댓글이 없습니다.</p>
+                            </div>
+
+                            <ul class="reply-list" th:if="${BoardDetail.reply != null and !BoardDetail.reply.isEmpty()}">
+                                <!-- .reply-item 및 .reply-item-nested 클래스 사용 -->
+                                <li th:each="reply : ${BoardDetail.reply}" 
+                                    th:class="${reply.reply_depth > 1} ? 'reply-item reply-item-nested' : 'reply-item'">
+                                    
+                                    <div class="reply-header">
+                                        <span class="reply-author" th:text="|작성자 ID: ${reply.user_id}|">작성자 ID: 54321</span>
+                                        <span class="reply-date" th:if="${reply.create_time != null}"
+                                              th:text="${#temporals.format(reply.create_time, 'yyyy-MM-dd HH:mm')}">2025-11-17 11:00</span>
+                                    </div>
+                                    <p class="reply-content" th:text="${reply.content}">댓글 내용입니다.</p>
+                                    
+                                    <button class="reply-action">답글 달기</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </div> <!-- // [왼쪽 영역] 끝 -->
+
+                <!-- .detail-sidebar로 변경 -->
+                <aside class="detail-sidebar">
+                    <!-- common.css의 .board-card 사용 -->
+                    <section class="board-card">
+                        <header class="card-header">
+                            <h2>연관 To-Do</h2>
+                        </header>
+                        <div class="card-content">
+                            <div th:if="${BoardDetail.todolist == null or BoardDetail.todolist.isEmpty()}">
+                                <p class="empty-feed" style="padding: 1rem 0; font-size: 1em;">연관된 To-Do가 없습니다.</p>
+                            </div>
+
+                            <ul class="todolist-list" th:if="${BoardDetail.todolist != null and !BoardDetail.todolist.isEmpty()}">
+                                
+                                <li th:each="todo : ${BoardDetail.todolist}" class="todo-item-detailed">
+                                    
+                                    <!-- 1. 완료 여부 아이콘 (common.css 클래스 + 인라인 SVG) -->
+                                    <div class="todo-icon">
+                                        <!-- (실행여부) F = Fulfilled -->
+                                        <div th:if="${todo.fulfillment_or_not == 'F'}" class="icon-fulfilled">
+                                            <svg class="icon-svg svg-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                        </div>
+                                        <!-- (실행여부) C = Cancelled -->
+                                        <div th:if="${todo.fulfillment_or_not == 'C'}" class="icon-cancelled">
+                                            <svg class="icon-svg svg-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                        </div>
+                                        <!-- (실행여부) R = Ready/Pending -->
+                                        <div th:if="${todo.fulfillment_or_not == 'R'}" class="icon-pending"></div>
+                                    </div>
+                                    
+                                    <!-- 2. 투두 내용 (common.css 클래스 사용) -->
+                                    <div class="todo-details">
+                                        
+                                        <!-- (todo내용) -->
+                                        <p class="todo-detail-main" th:text="${todo.todo_type_detail}">To-Do 상세 내용</p>
+                                        
+                                        <!-- (횟수/단위) -->
+                                        <p class="todo-detail-quantity" th:text="|${todo.todo_number} ${todo.todo_unit}|">10 회</p>
+                                        
+                                        <!-- (todo유형, 실행여부) -->
+                                        <div class="todo-detail-badges">
+                                            <span class="badge-gray-small" th:text="${todo.todo_type}">운동</span>
+                                            <th:block th:switch="${todo.fulfillment_or_not}">
+                                                <span th:case="'R'" class="badge-status badge-status-r">진행중</span>
+                                                <span th:case="'C'" class="badge-status badge-status-c">취소됨</span>
+                                                <span th:case="'F'" class="badge-status badge-status-f">완료됨</span>
+                                            </th:block>
+                                        </div>
+
+                                        <!-- (생성시간, 완료시간) -->
+                                        <div class="todo-detail-times">
+                                            <p th:if="${todo.create_time != null}">
+                                                <span>생성:</span>
+                                                <span th:text="${#temporals.format(todo.create_time, 'yy.MM.dd HH:mm')}">25.11.17 10:30</span>
+                                            </p>
+                                            <p th:if="${todo.update_time != null}">
+                                                <span>완료/수정:</span>
+                                                <span th:text="${#temporals.format(todo.update_time, 'yy.MM.dd HH:mm')}">25.11.18 12:00</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </aside> <!-- // [오른쪽 영역] 끝 -->
+
+            </div> <!-- // 그리드 끝 -->
+
+        </div> <!-- // BoardDetail null 체크 끝 -->
+
+        <!-- (!! 예외 처리 !!) BoardDetail 객체가 없는 경우 -->
+        <div th:if="${BoardDetail == null}" class="board-card" style="max-width: 500px; margin: 2rem auto; text-align: center;">
+            <div class="card-content">
+                <h2 style="color: #721c24; font-size: 1.5em; font-weight: 600;">오류 발생</h2>
+                <p style="color: #666; margin-top: 0.5rem;">게시글을 불러오는 데 실패했습니다. 이전 페이지로 돌아가세요.</p>
+            </div>
+        </div>
+
     </main>
 
     <div th:replace="~{fragments/footer :: footer}"></div>

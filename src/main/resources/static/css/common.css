@@ -1,3 +1,4 @@
+/* === 기존 common.css 내용 (제공된 내용) === */
 header { background-color: #333; color: #fff; padding: 1rem; text-align: center; }
 footer { background-color: #333; color: #fff; text-align: center; padding: 1rem; position: relative; bottom: 0; width: 100%; }
 nav ul { list-style: none; background-color: #444; text-align: center; padding: 0.5rem 0; }
@@ -58,7 +59,7 @@ body.form-page-body {
     padding: 0.75rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box;
+    box-sizing: border-box; /* 패딩이 너비를 밀어내지 않도록 함 */
 }
 
 .submit-btn {
@@ -185,4 +186,245 @@ body.form-page-body {
     color: #888;
     padding: 50px;
     font-size: 1.2em;
+}
+.card-link-wrapper {
+    display: block;
+    text-decoration: none;
+    color: inherit; /* 부모(카드)의 텍스트 색상 상속 */
+}
+.board-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.board-card:hover {
+    transform: translateY(-4px); /* 살짝 위로 이동 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 그림자 효과 */
+    cursor: pointer; /* 마우스 커서 변경 */
+}
+
+
+/* === [!! 신규 !!] boardDetail.html 전용 스타일 === */
+
+/* 상세 페이지 2단 레이아웃 */
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 모바일: 1열 */
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* 데스크탑 (1024px 이상)에서 3:1 비율로 변경 */
+@media (min-width: 1024px) {
+    .detail-grid {
+        grid-template-columns: 3fr 1fr;
+    }
+}
+
+.detail-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* 카드 사이 간격 */
+}
+
+.detail-sidebar {
+    margin-top: 1.5rem;
+}
+@media (min-width: 1024px) {
+    .detail-sidebar {
+        margin-top: 0;
+        position: sticky; /* 스크롤 따라오도록 */
+        top: 2rem;       /* 상단 여백 */
+        align-self: start;
+    }
+}
+
+/* 상세 페이지 카드 헤더 (h2 제목용) */
+.card-header h2 {
+    font-size: 1.5em; /* 폰트 크기 h1보다 작게 */
+    font-weight: 600;
+    color: #333;
+    margin: 0; /* 기존 h1,p 스타일 초기화 */
+    padding: 0;
+}
+
+/* 게시글 본문 태그 (공개범위, 완료여부) */
+.board-tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+/* 댓글 리스트 */
+.reply-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.reply-item {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 1rem;
+}
+.reply-item-nested {
+    /* 대댓글 스타일 */
+    margin-left: 1.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid #e0e0e0;
+}
+.reply-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+.reply-author {
+    font-weight: 600;
+    font-size: 0.9em;
+}
+.reply-date {
+    font-size: 0.8em;
+    color: #666;
+}
+.reply-content {
+    font-size: 1em;
+    color: #333;
+}
+.reply-action {
+    font-size: 0.8em;
+    color: #007bff;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-top: 0.25rem;
+    font-weight: 600;
+}
+.reply-action:hover {
+    text-decoration: underline;
+}
+
+/* Todolist (사이드바) */
+.todolist-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* 각 항목 사이 간격 */
+}
+
+.todo-item-detailed {
+    display: flex;
+    align-items: flex-start; /* 아이콘과 텍스트 상단 정렬 */
+    gap: 0.75rem; /* 아이콘과 내용 사이 간격 */
+    padding: 0.75rem;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+.todo-item-detailed:hover {
+    background-color: #f0f0f0;
+}
+
+.todo-icon {
+    flex-shrink: 0; /* 아이콘이 찌그러지지 않도록 */
+    margin-top: 0.15rem; /* 텍스트와 상단 정렬 맞춤 */
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box; /* 테두리 포함 크기 */
+}
+.todo-icon .icon-pending {
+    border: 2px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+}
+.todo-icon .icon-fulfilled {
+    background: #007bff; /* 파란색으로 변경 */
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.todo-icon .icon-cancelled {
+    background: #f8d7da; /* 빨간 계열 */
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.todo-icon .icon-svg {
+    width: 14px;
+    height: 14px;
+}
+.todo-icon .svg-white { color: white; }
+.todo-icon .svg-red { color: #721c24; }
+
+
+.todo-details {
+    flex-grow: 1; /* 남은 공간 모두 차지 */
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem; /* 내용 줄 사이 간격 */
+    width: 100%; 
+    text-align: left; /* common.css 오버라이드 */
+}
+.todo-detail-main {
+    font-weight: 600;
+    color: #333;
+    font-size: 1em;
+}
+.todo-detail-quantity {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #007bff; /* 파란색 */
+}
+.todo-detail-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    margin-top: 0.25rem;
+}
+/* 작은 배지 스타일 */
+.badge-gray-small {
+    padding: 2px 8px;
+    font-size: 0.75em;
+    font-weight: 500;
+    border-radius: 12px;
+    background-color: #e0e0e0;
+    color: #333;
+}
+.badge-status {
+    padding: 2px 8px;
+    font-size: 0.75em;
+    font-weight: 500;
+    border-radius: 12px;
+}
+.badge-status-r { background-color: #f8d7da; color: #721c24; } /* Ready/Pending */
+.badge-status-c { background-color: #fff3cd; color: #856404; } /* Cancelled */
+.badge-status-f { background-color: #d4edda; color: #155724; } /* Fulfilled */
+
+.todo-detail-times {
+    font-size: 0.75em;
+    color: #777;
+    padding-top: 0.35rem;
+    border-top: 1px solid #eee;
+    margin-top: 0.35rem;
+    text-align: left;
+}
+.todo-detail-times p {
+    margin: 0;
+    line-height: 1.4; /* 줄간격 좁게 */
+}
+.todo-detail-times span {
+    font-weight: 500;
 }

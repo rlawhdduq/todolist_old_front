@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import todolist.old_front.dto.board.BoardDetailDto;
+import todolist.old_front.dto.board.BoardDto;
 import todolist.old_front.dto.board.BoardListDto;
 import todolist.old_front.dto.board.GetBoardDto;
 import todolist.old_front.dto.board.reply.ReplyDto;
@@ -59,6 +60,13 @@ public class BoardController {
 
         model.addAttribute("BoardDetail", detailBoard);
         return "board/boardDetail";
+    }
+
+    @RequestMapping(path="/write", method=RequestMethod.GET)
+    public String writeBoard(Model model)
+    {
+        model.addAttribute("boardDto", new BoardDto());
+        return "board/boardWrite";
     }
     
     // Reply
