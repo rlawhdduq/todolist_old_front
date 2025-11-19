@@ -25,7 +25,7 @@
     <div th:replace="~{fragments/header :: header}"></div>
 
     <main>
-        <form th:action="@{/board/write}" th:object="${boardDto}" method="post">
+        <form th:object="${boardDto}" id="writeForm">
             
             <div class="detail-grid">
                 <!-- [왼쪽 영역] -->
@@ -48,8 +48,6 @@
                         </header>
 
                         <section class="card-content">
-                            <input type="hidden" th:field="*{user_id}"> 
-
                             <div class="form-group">
                                 <textarea th:field="*{content}" class="form-control" placeholder="오늘의 기록을 남겨보세요..." required></textarea>
                             </div>
@@ -69,7 +67,7 @@
 
                     <div style="text-align: right; margin-top: 20px;">
                         <a href="javascript:history.back()" class="btn-cancel">취소</a>
-                        <button type="submit" class="btn-submit">등록 완료</button>
+                        <button type="button" class="btn-submit" id="btnSubmit">등록 완료</button>
                     </div>
                 </div> 
 
@@ -119,6 +117,47 @@
             const item = document.getElementById(`todo-item-${index}`);
             if (item) item.remove();
         }
+        document.getElementById('btnSubmit').addEventListener('click', function(event) {
+            const btn = document.getElementById('btnSubmit');
+            
+            // 이미 비활성화된 상태라면 전송 막음
+            if (btn.disabled) return;
+            
+            // 폼 유효성 검사
+            const form = document.getElementById('writeForm');
+
+            if(!form.checkValidity())
+            {
+                form.reportValidity();
+                return;
+            }
+
+            // 버튼 비활성화 및 텍스트 변경
+            btn.disabled = true;
+            btn.innerText = '등록 중...';
+            // form데이터 생성
+            const formData = new FormData(form);
+
+            // RestController로 전송
+            fetch('/api/v1/board', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) return response.text();
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                // 성공 시 목록으로 이동
+                window.location.href = window.location.origin + '/board/' + data; 
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('등록 중 오류가 발생했습니다.');
+                btn.disabled = false;
+                btn.innerText = '등록 완료';
+            });
+        });
     </script>
 </body>
 </html>

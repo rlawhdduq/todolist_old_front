@@ -3,6 +3,7 @@ package todolist.old_front.controller.rest;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import todolist.old_front.dto.board.BoardDetailDto;
 import todolist.old_front.dto.board.BoardDto;
 import todolist.old_front.dto.board.reply.ReplyDto;
+import todolist.old_front.dto.user.AuthUserDto;
 import todolist.old_front.service.board.impl.BoardServiceImpl;
 import todolist.old_front.service.board.impl.ReplyServiceImpl;
 import todolist.old_front.service.board.impl.TodoServiceImpl;
@@ -38,9 +40,11 @@ public class BoardApi {
     }
     
     @RequestMapping(path="/board", method=RequestMethod.POST)
-    public void insertBoard(BoardDto boardDto, HttpSession session) {
-        boardService.insert(boardDto, session.getAttribute("token").toString());
-        return;
+    public Long insertBoard(BoardDto boardDto, HttpSession session) {
+        AuthUserDto authUser = (AuthUserDto) session.getAttribute("loginUser");
+        boardDto.setUser_id(authUser.getUser_id());
+        Long board_id = boardService.insert(boardDto, session.getAttribute("token").toString());
+        return board_id;
     }
     @RequestMapping(path="/board", method=RequestMethod.PUT)
     public void updateBoard(BoardDto boardDto, HttpSession session)

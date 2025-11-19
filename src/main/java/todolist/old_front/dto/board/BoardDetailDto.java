@@ -15,7 +15,7 @@ import todolist.old_front.dto.board.todolist.TodolistDto;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardDetailDto {
-private Long board_id;
+    private Long board_id;
     private Long user_id;
     private String scope_of_disclosure;
     private Character fulfillment_or_not;

@@ -7,7 +7,35 @@
     
     <!-- common.css만 사용 -->
     <link rel="stylesheet" th:href="@{/css/common.css}">
-    
+    <style>
+        /* 점 3개 버튼 스타일 */
+        .btn-more {
+            background: none; border: none; font-size: 1.5rem; cursor: pointer;
+            color: #555; padding: 0 10px; line-height: 1;
+        }
+        .btn-more:hover { color: #000; }
+
+        /* 드롭다운 컨테이너 */
+        .action-dropdown { position: relative; display: inline-block; margin-left: 10px; }
+        
+        /* 드롭다운 내용 (평소엔 숨김) */
+        .dropdown-content {
+            display: none; position: absolute; right: 0; top: 100%;
+            background-color: #fff; min-width: 100px;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+            border-radius: 6px; z-index: 10; border: 1px solid #eee;
+        }
+        
+        /* 링크 스타일 */
+        .dropdown-content a {
+            color: #333; padding: 10px 15px; text-decoration: none;
+            display: block; font-size: 0.9rem; text-align: left;
+        }
+        .dropdown-content a:hover { background-color: #f5f5f5; }
+        
+        /* 호버 시 메뉴 보이기 */
+        .action-dropdown:hover .dropdown-content { display: block; }
+    </style>
 </head>
 <body>
 
@@ -28,24 +56,46 @@
                     <article class="board-card">
                         <header class="card-header">
                             <div> <!-- div로 묶어서 세로 정렬 -->
-                                <!-- 
-                                    common.css의 .card-header가 flex이므로, 
-                                    이 자식 div들이 가로로 정렬됩니다. 
-                                    이 div에 width: 100%를 주거나, 
-                                    .card-header의 flex-direction을 column으로 바꿔야 합니다.
-                                    일단 인라인 스타일로 width: 100%를 줘서 해결합니다.
-                                -->
                                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                                    <span class="card-author" th:text="|작성자 ID: ${BoardDetail.user_id}|">작성자 ID: 12345</span>
-                                    <span class="card-date" th:if="${BoardDetail.create_time != null}"
-                                          th:text="${#temporals.format(BoardDetail.create_time, 'yyyy-MM-dd HH:mm')}">2025-11-17 10:30</span>
-                                </div>
-                                <div class="board-tags">
-                                    <span class="tag" th:text="${BoardDetail.scope_of_disclosure == 'PUBLIC'} ? '전체 공개' : '비공개'">전체 공개</span>
-                                    <!-- 'F'일 때 .tag-done 클래스 사용 (common.css 정의 활용) -->
-                                    <span class="tag tag-done" th:if="${BoardDetail.fulfillment_or_not == 'F'}">
-                                        달성 완료
-                                    </span>
+                                    <!-- [좌측] 작성자 정보 -->
+                                    <div class="info-left">
+                                        <span class="card-author" th:text="|작성자 ID: ${BoardDetail.user_id}|">작성자 ID: 12345</span>
+                                        <span class="card-date" th:if="${BoardDetail.create_time != null}"
+                                              th:text="${#temporals.format(BoardDetail.create_time, 'yyyy-MM-dd HH:mm')}">2025-11-17 10:30</span>
+                                    </div>
+
+                                    <!-- [우측] 태그 + 수정/삭제 버튼 그룹 -->
+                                    <div class="info-right" style="display: flex; align-items: center;">
+                                        <div class="board-tags">
+                                            <th:block th:switch="${BoardDetail.scope_of_disclosure}">
+                                                <span th:case="'A'" class="tag">전체 공개</span>
+                                                <span th:case="'C'" class="tag">커뮤니티 공개</span>
+                                                <span th:case="'F'" class="tag">친구 공개</span>
+                                                <span th:case="*" class="tag">비공개</span>
+                                            </th:block>
+                                            <span class="tag tag-done" th:if="${BoardDetail.fulfillment_or_not == 'F'}">
+                                                달성 완료
+                                            </span>
+                                        </div>
+
+                                        <!-- [추가] 수정/삭제 드롭다운 버튼 (본인일 때만 표시) -->
+                                        <!-- session.loginUser가 존재하고, 작성자 ID와 일치할 때 -->
+                                        <div class="action-dropdown" 
+                                             th:if="${session.loginUser != null and session.loginUser.user_id == BoardDetail.user_id}">
+                                            
+                                            <button type="button" class="btn-more">⋮</button>
+                                            
+                                            <div class="dropdown-content">
+                                                <!-- 1. 수정 페이지로 이동 (BoardController에 /update/{id} 매핑 필요) -->
+                                                <a th:href="@{/board/update/{id}(id=${BoardDetail.board_id})}">수정하기</a>
+                                                
+                                                <!-- 2. 삭제 기능 (JS 함수 호출) -->
+                                                <a href="javascript:void(0);" 
+                                                   th:onclick="|deleteBoard(${BoardDetail.board_id})|">삭제하기</a>
+                                            </div>
+                                        </div>
+                                        <!-- // 버튼 끝 -->
+                                    </div>
                                 </div>
                             </div>
                         </header>

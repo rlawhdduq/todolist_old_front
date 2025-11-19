@@ -68,6 +68,22 @@ public class BoardController {
         model.addAttribute("boardDto", new BoardDto());
         return "board/boardWrite";
     }
+
+    @RequestMapping(path="/update/{boardId}", method=RequestMethod.GET)
+    public String updateBoard(@PathVariable Long boardId, Model model, HttpSession session)
+    {
+        BoardDetailDto boardDetailDto = boardService.getDetailBoard(boardId, session.getAttribute("token").toString());
+
+        // 현재 사용자가 게시글 작성자인지 확인
+        AuthUserDto authUserDto = (AuthUserDto) session.getAttribute("loginUser");
+        if(authUserDto == null || !authUserDto.getUser_id().equals(boardDetailDto.getUser_id()))
+        {
+            return "redirect:/board";
+        }
+        
+        model.addAttribute("boardDto", boardDetailDto);
+        return "board/boardWrite";
+    }
     
     // Reply
     // Todo
