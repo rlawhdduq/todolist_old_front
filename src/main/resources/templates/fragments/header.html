@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
     <div th:fragment="header">
         <header>
@@ -8,15 +9,13 @@
 
         <section class="auth-section">
 
-            <!-- (A) 로그아웃 상태일 때 (isAnonymous): "로그인" 버튼 표시 -->
-            <!-- 클릭 시 /user/login 페이지로 이동 -->
+            <!-- (A) 로그아웃 상태일 때 -->
             <div sec:authorize="isAnonymous()">
                 <a th:href="@{/user/login}" class="button">로그인</a>
             </div>
 
-            <!-- (B) 로그인 상태일 때 (isAuthenticated): "로그아웃" 버튼 표시 -->
+            <!-- (B) 로그인 상태일 때 -->
             <div sec:authorize="isAuthenticated()">
-                <!-- Spring Security는 CSRF 방지를 위해 POST 방식 /logout을 권장 -->
                 <form th:action="@{/api/v1/user/logout}" method="post" style="display: inline;">
                     <button type="submit" class="button">로그아웃</button>
                 </form>
@@ -26,9 +25,16 @@
         
         <nav>
             <ul>
-                <li><a href="/board">Feed</a></li>
+                <li><a th:href="@{/board}">Feed</a></li>
                 <li><a href="#">Search</a></li>
-                <li><a href="/user/info">Profile</a></li>
+                
+                <!-- [수정된 부분] -->
+                <li>
+                    <!-- 삼항 연산자 사용: 세션(loginUser)이 있으면 ID를 붙인 URL, 없으면 로그인 페이지 -->
+                    <a th:href="${session.loginUser != null} ? @{/user/info/{id}(id=${session.loginUser.id})} : @{/user/login}">
+                        Profile
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

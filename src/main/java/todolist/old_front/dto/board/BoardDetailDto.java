@@ -17,6 +17,7 @@ import todolist.old_front.dto.board.todolist.TodolistDto;
 public class BoardDetailDto {
     private Long board_id;
     private Long user_id;
+    private String writer_id;
     private String scope_of_disclosure;
     private Character fulfillment_or_not;
     private LocalDateTime create_time;
@@ -26,11 +27,12 @@ public class BoardDetailDto {
     private List<TodolistDto> todolist;
     private List<ReplyDto> reply;
 
-    public BoardDetailDto(Long board_id, Long user_id, String scope_of_disclosure, 
+    public BoardDetailDto(Long board_id, Long user_id, String writer_id, String scope_of_disclosure, 
     Character fulfillment_or_not, LocalDateTime create_time, LocalDateTime fulfillment_time, String content)
     {
         this.board_id = board_id;
         this.user_id = user_id;
+        this.writer_id = writer_id;
         this.scope_of_disclosure = scope_of_disclosure;
         this.fulfillment_or_not = fulfillment_or_not;
         this.create_time = create_time;

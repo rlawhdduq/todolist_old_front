@@ -10,5 +10,5 @@ public interface FollowService {
     String insert(FollowDto followDto, String token);
     String delete(FollowDto followDto, String token);
     Map<String, List<Long>> getFollowing(Long userId, String token);
-
+    Boolean followState(Long target_user_id, Long source_user_id, String token);
 }

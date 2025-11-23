@@ -65,4 +65,16 @@ public class FollowServiceImpl implements FollowService{
                                             .block();
         return followerList;
     }
+
+    @Override
+    public Boolean followState(Long target_user_id, Long source_user_id, String token)
+    {
+        Boolean followState = webClient.get()
+                            .uri(gatewayUrl+"/api/v1/follow/state?target={target}&source={source}", target_user_id, source_user_id)
+                            .header("token", token)
+                            .retrieve()
+                            .bodyToMono(Boolean.class)
+                            .block();
+        return followState;
+    }
 }

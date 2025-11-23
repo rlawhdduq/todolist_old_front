@@ -51,9 +51,9 @@ public class UserApi {
     private static final Logger log = LoggerFactory.getLogger(UserApi.class);
     
     @RequestMapping(path="/{userId}", method=RequestMethod.GET)
-    public AuthUserDto getUser(@PathVariable Long userId)
+    public AuthUserDto getUser(@PathVariable String id)
     {
-        AuthUserDto authUserDto = userService.getUser(userId);
+        AuthUserDto authUserDto = userService.getUser(id);
         return authUserDto;
     }
 

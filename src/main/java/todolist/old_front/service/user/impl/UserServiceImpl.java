@@ -20,10 +20,10 @@ public class UserServiceImpl implements UserService{
     private WebClient webClient;
 
     @Override
-    public AuthUserDto getUser(Long userId)
+    public AuthUserDto getUser(String id)
     {
         AuthUserDto callRes = webClient.get()
-                                 .uri(gatewayUrl+"/"+userId)
+                                 .uri(gatewayUrl+"/api/v1/user/"+id)
                                  .retrieve()
                                  .bodyToMono(AuthUserDto.class).block();
         return callRes;

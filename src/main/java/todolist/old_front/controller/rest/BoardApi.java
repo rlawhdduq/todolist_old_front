@@ -43,6 +43,7 @@ public class BoardApi {
     public Long insertBoard(BoardDto boardDto, HttpSession session) {
         AuthUserDto authUser = (AuthUserDto) session.getAttribute("loginUser");
         boardDto.setUser_id(authUser.getUser_id());
+        boardDto.setWriter_id(authUser.getId());
         Long board_id = boardService.insert(boardDto, session.getAttribute("token").toString());
         return board_id;
     }

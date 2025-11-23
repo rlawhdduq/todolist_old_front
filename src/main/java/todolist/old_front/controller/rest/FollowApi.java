@@ -22,7 +22,7 @@ public class FollowApi {
     private FollowServiceImpl followService;
 
     @RequestMapping(path="/{userId}", method=RequestMethod.GET)
-    public Map<String, List<Long>> requestMethodName(@PathVariable Long userId, HttpSession session)
+    public Map<String, List<Long>> getFollowing(@PathVariable Long userId, HttpSession session)
     {
         Map<String, List<Long>> res = followService.getFollowing(userId, session.getAttribute("token").toString());
         return res;
@@ -41,5 +41,4 @@ public class FollowApi {
         String res = followService.delete(followDto, session.getAttribute("token").toString());
         return res;
     }
-
 }
