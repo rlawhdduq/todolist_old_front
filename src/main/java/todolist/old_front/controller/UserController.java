@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import todolist.old_front.dto.user.AuthUserDto;
 import todolist.old_front.dto.user.JoinUserDto;
 import todolist.old_front.dto.user.LoginUserDto;
+import todolist.old_front.service.follow.impl.FollowServiceImpl;
 import todolist.old_front.service.user.impl.UserServiceImpl;
 
 @Controller
@@ -19,6 +20,8 @@ public class UserController {
 
     @Autowired
     UserServiceImpl userService;
+    @Autowired
+    FollowServiceImpl followService;
 
     @RequestMapping(path="/login", method=RequestMethod.GET)
     public String loginPage(Model model)
@@ -40,17 +43,16 @@ public class UserController {
         // 파라미터로 넘어온 id와 현재 세션에 저장된 AuthUserDto에 있는 id를 비교, 자기자신인지 판별한다
         AuthUserDto userInfo = (AuthUserDto) session.getAttribute("loginUser");
         AuthUserDto targetInfo = userService.getUser(id);
-
-        if(userInfo.getId().equals(targetInfo.getId()))
-        {
-            // 자기자신임
-            model.addAttribute("myself", "Y");
-        }
-        else
+        Boolean isMyself = true;
+        Boolean isFollowing = true;
+        if(!userInfo.getId().equals(targetInfo.getId()))
         {
             // 나아님
-            model.addAttribute("myself", "N");
+            isMyself = false;
+            isFollowing = followService.followState(targetInfo.getUser_id(), userInfo.getUser_id(), session.getAttribute("token").toString());
         }
+        model.addAttribute("isFollowing", isFollowing);
+        model.addAttribute("isMyself", isMyself);
         model.addAttribute("targetInfo", targetInfo);
         return "user/info";
     }

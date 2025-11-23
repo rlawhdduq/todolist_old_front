@@ -3,111 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyDays - 마이페이지</title>
+    <title>MyDays - 프로필</title>
     <link rel="stylesheet" th:href="@{/css/common.css}">
     
     <style>
-        /* 마이페이지 전용 스타일 */
+        /* (기존 스타일 그대로 유지) */
         .profile-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            padding: 3rem 2rem;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            margin: 0 auto; /* 중앙 정렬 */
+            background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 3rem 2rem; text-align: center; max-width: 400px; width: 100%; margin: 0 auto;
         }
-
-        /* 프로필 아이콘 */
         .profile-avatar-placeholder {
-            width: 100px;
-            height: 100px;
-            background-color: #f0f2f5;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 3rem;
-            color: #cbd5e0;
-            border: 2px solid #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 100px; height: 100px; background-color: #f0f2f5; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem; font-size: 3rem; color: #cbd5e0;
+            border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-
-        /* 사용자 아이디 */
-        .profile-username {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        /* 유저 타입 배지 */
+        .profile-username { font-size: 1.5rem; font-weight: 700; color: #333; margin-bottom: 0.5rem; }
         .profile-type-badge {
-            display: inline-block;
-            background-color: #e3f2fd;
-            color: #4a90e2;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
+            display: inline-block; background-color: #e3f2fd; color: #4a90e2; padding: 4px 12px;
+            border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 2rem;
         }
-
-        /* 팔로워/팔로잉 통계 영역 */
         .profile-stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            border-top: 1px solid #eee;
-            padding-top: 2rem;
+            display: flex; justify-content: center; gap: 2rem; border-top: 1px solid #eee; padding-top: 2rem;
         }
-
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 80px;
-        }
-
-        .stat-number {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: #333;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: #888;
-            margin-top: 4px;
-        }
+        .stat-item { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
+        .stat-number { font-size: 1.25rem; font-weight: 800; color: #333; }
+        .stat-label { font-size: 0.85rem; color: #888; margin-top: 4px; }
         
-        /* 버튼 영역 */
-        .profile-actions {
-            margin-top: 2rem;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        
+        .profile-actions { margin-top: 2rem; display: flex; gap: 10px; justify-content: center; }
         .btn-edit { background-color: #4a90e2; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; text-decoration: none; font-size: 0.9rem;}
         .btn-logout { background-color: #f8f9fa; color: #666; border: 1px solid #ddd; padding: 10px 20px; border-radius: 6px; cursor: pointer; text-decoration: none; font-size: 0.9rem;}
         .btn-logout:hover { background-color: #e9ecef; }
-        /* 팔로우 버튼 (파란색 채움) */
-        .btn-follow {
-            background-color: #4a90e2; color: white; border: none; 
-            padding: 10px 24px; border-radius: 6px; cursor: pointer; 
-            font-weight: 600; transition: 0.2s;
-        }
+        
+        /* 팔로우 버튼 스타일 */
+        .btn-follow { background-color: #4a90e2; color: white; border: none; padding: 10px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; }
         .btn-follow:hover { background-color: #357abd; }
-
-        /* 언팔로우 버튼 (회색 테두리) */
-        .btn-unfollow {
-            background-color: white; color: #666; border: 1px solid #ddd; 
-            padding: 10px 24px; border-radius: 6px; cursor: pointer; 
-            font-weight: 600; transition: 0.2s;
-        }
+        .btn-unfollow { background-color: white; color: #666; border: 1px solid #ddd; padding: 10px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; }
         .btn-unfollow:hover { border-color: #ff6b6b; color: #ff6b6b; background-color: #fff5f5; }
     </style>
 </head>
@@ -117,52 +48,98 @@
 
     <main style="padding: 4rem 1rem; background-color: #f9f9f9; min-height: 80vh;"> 
         
-        <!-- 세션에 로그인 유저 정보가 있을 때만 표시 -->
-        <div class="profile-card" th:if="${session.loginUser != null}">
+        <!-- targetInfo가 있어야 표시 -->
+        <div class="profile-card" th:if="${targetInfo != null}">
             
-            <!-- 1. 프로필 이미지 (임시 아이콘) -->
+            <!-- 1. 프로필 이미지 -->
             <div class="profile-avatar-placeholder">
-                <!-- SVG 아이콘: 사람 모양 -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </div>
 
-            <!-- 2. 아이디 (String id) -->
-            <h1 class="profile-username" th:text="${session.loginUser.id}">Username123</h1>
+            <!-- 2. 아이디 -->
+            <h1 class="profile-username" th:text="${targetInfo.id}">Username123</h1>
 
-            <!-- 3. 유저 타입 (String user_type) -->
-            <span class="profile-type-badge" th:text="${session.loginUser.user_type}">MEMBER</span>
+            <!-- 3. 유저 타입 -->
+            <span class="profile-type-badge" th:text="${targetInfo.user_type}">MEMBER</span>
 
             <!-- 4. 팔로잉/팔로워 숫자 -->
             <div class="profile-stats">
                 <div class="stat-item">
-                    <!-- number_of_follower -->
-                    <span class="stat-number" th:text="${session.loginUser.number_of_follower}">120</span>
+                    <span class="stat-number" th:text="${targetInfo.number_of_follower}">120</span>
                     <span class="stat-label">팔로워</span>
                 </div>
                 <div class="stat-item" style="border-left: 1px solid #eee; padding-left: 2rem;">
-                    <!-- number_of_following -->
-                    <span class="stat-number" th:text="${session.loginUser.number_of_following}">85</span>
+                    <span class="stat-number" th:text="${targetInfo.number_of_following}">85</span>
                     <span class="stat-label">팔로잉</span>
                 </div>
             </div>
 
-            <!-- (선택사항) 정보수정/로그아웃 버튼 -->
+            <!-- [수정됨] boolean 변수(isMyself) 사용 -->
             <div class="profile-actions">
-                <a href="#" class="btn-edit">정보 수정</a>
-                <a href="/logout" class="btn-logout">로그아웃</a>
+
+                <!-- Case 1: 내 페이지인 경우 (isMyself가 true일 때) -->
+                <th:block th:if="${isMyself}">
+                    <a href="#" class="btn-edit">정보 수정</a>
+                    <form th:action="@{/api/v1/user/logout}" method="post" style="display:inline;">
+                        <button type="submit" class="btn-logout">로그아웃</button>
+                    </form>
+                </th:block>
+
+                <!-- Case 2: 남의 페이지인 경우 (isMyself가 false일 때) -->
+                <th:block th:if="${!isMyself}">
+                    <!-- 로그인 상태여야 팔로우 버튼 노출 -->
+                    <th:block th:if="${session.loginUser != null}">
+                        
+                        <!-- 팔로우 안 함 (!isFollowing) -->
+                        <button type="button" class="btn-follow" 
+                                th:if="${!isFollowing}" 
+                                th:onclick="|requestFollow(${targetInfo.user_id}, 'POST')|">
+                            팔로우
+                        </button>
+                        
+                        <!-- 이미 팔로우 함 (isFollowing) -->
+                        <button type="button" class="btn-unfollow" 
+                                th:if="${isFollowing}" 
+                                th:onclick="|requestFollow(${targetInfo.user_id}, 'DELETE')|">
+                            팔로잉 취소
+                        </button>
+                    </th:block>
+                    
+                    <!-- 비로그인 상태면 로그인 유도 -->
+                    <a th:if="${session.loginUser == null}" href="/user/login" class="btn-logout">로그인하고 팔로우하기</a>
+                </th:block>
+
             </div>
 
         </div>
 
-        <!-- 로그인 정보가 없을 경우 예외처리 -->
-        <div th:if="${session.loginUser == null}" style="text-align: center; padding: 50px;">
-            <p>로그인 정보가 없습니다.</p>
-            <a href="/login">로그인 하러 가기</a>
+        <!-- 예외처리 -->
+        <div th:if="${targetInfo == null}" style="text-align: center; padding: 50px;">
+            <p>존재하지 않는 사용자입니다.</p>
+            <a href="/board">메인으로 가기</a>
         </div>
 
     </main> 
 
     <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script>
+        function requestFollow(targetPk, methodType) {
+            if (methodType === 'DELETE' && !confirm("정말 팔로우를 취소하시겠습니까?")) return;
+
+            fetch('/api/v1/follow/' + targetPk, {
+                method: methodType
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert("처리 실패");
+                }
+            })
+            .catch(error => console.error(error));
+        }
+    </script>
 
 </body>
 </html>

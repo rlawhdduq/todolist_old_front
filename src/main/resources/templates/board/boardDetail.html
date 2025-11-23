@@ -59,9 +59,13 @@
                                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                                     <!-- [좌측] 작성자 정보 -->
                                     <div class="info-left">
-                                        <span class="card-author" th:text="|작성자 ID: ${BoardDetail.user_id}|">작성자 ID: 12345</span>
+                                        <a th:href="@{|/user/info/${BoardDetail.writer_id}|}" class="author-link">
+                                            <span class="card-author" th:text="${BoardDetail.writer_id}">user123</span>
+                                        </a>
                                         <span class="card-date" th:if="${BoardDetail.create_time != null}"
-                                              th:text="${#temporals.format(BoardDetail.create_time, 'yyyy-MM-dd HH:mm')}">2025-11-17 10:30</span>
+                                            th:text="${#temporals.format(BoardDetail.create_time, 'yyyy-MM-dd HH:mm')}">
+                                            2025-11-17 10:30
+                                        </span>
                                     </div>
 
                                     <!-- [우측] 태그 + 수정/삭제 버튼 그룹 -->
@@ -122,11 +126,14 @@
                                 <!-- .reply-item 및 .reply-item-nested 클래스 사용 -->
                                 <li th:each="reply : ${BoardDetail.reply}" 
                                     th:class="${reply.reply_depth > 1} ? 'reply-item reply-item-nested' : 'reply-item'">
-                                    
                                     <div class="reply-header">
-                                        <span class="reply-author" th:text="|작성자 ID: ${reply.user_id}|">작성자 ID: 54321</span>
+                                        <a th:href="@{|/user/info/${reply.writer_id}|}" class="author-link">
+                                            <span class="reply-author" th:text="${reply.writer_id}">user5678</span>
+                                        </a>
                                         <span class="reply-date" th:if="${reply.create_time != null}"
-                                              th:text="${#temporals.format(reply.create_time, 'yyyy-MM-dd HH:mm')}">2025-11-17 11:00</span>
+                                            th:text="${#temporals.format(reply.create_time, 'yyyy-MM-dd HH:mm')}">
+                                            2025-11-17 11:00
+                                        </span>
                                     </div>
                                     <p class="reply-content" th:text="${reply.content}">댓글 내용입니다.</p>
                                     
